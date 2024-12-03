@@ -64,7 +64,7 @@ def buscar_empleado(nombre):
     finally:
         cursor.close()
         conn.close()
-
+#hjfhgfds
 def crear_tabla():#Función para crear las tablas en la base de datos
         conn = conectar()
         if conn is None:
