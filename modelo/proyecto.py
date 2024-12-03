@@ -1,4 +1,4 @@
-class proyecto:
+class Proyecto:
     def __init__(self, nombre_proyecto,descripcion_proyecto,fecha_inicio):
         self.__id=0
         self.__nombre_proyecto=nombre_proyecto
