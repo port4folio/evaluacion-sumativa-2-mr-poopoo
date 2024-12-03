@@ -5,12 +5,6 @@ class registro_tiempo:
         self.__id_proyecto=id_proyecto
         self.__hrs_trabajadas=hrs_trabajadas
         self.__descripcion_tareas=descripcion_tareas
-        #asdasdasdasd
-        # dfsksdhfhdf
-
-        self.__hrs_trabajadas=hrs_trabajadas
-        self.__descripcion_tareas=descripcion_tareas
-        self.__id_proyecto=id_proyecto
 
     def get_empleado(self):
         return self.__empleado
