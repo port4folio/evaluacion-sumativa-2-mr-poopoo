@@ -8,6 +8,13 @@ class registro_tiempo:
         #asdasdasdasd
         # dfsksdhfhdf
 
+        self.__hrs_trabajadas=hrs_trabajadas
+        self.__descripcion_tareas=descripcion_tareas
+        self.__id_proyecto=id_proyecto
+
+    def get_empleado(self):
+        return self.__empleado
+    
     def get_fecha(self):
         return self.__fecha
     
@@ -42,5 +49,5 @@ class registro_tiempo:
 
 
     def __str__(self):
-        return f"{self.__empleado}trabajo {self.__horas_trabajadas}horas,   el dia {self.__fecha}en el proyecto {self.__proyecto}"
+        return f"{self.__empleado}trabajo {self.__horas_trabajadas}horas,   el dia {self.__fecha}en el proyecto {self.__id_proyecto}"
 
