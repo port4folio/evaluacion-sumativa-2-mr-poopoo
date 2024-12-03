@@ -10,7 +10,7 @@ def conectar():
   try:
     conn = mysql.connector.connect(
       host = 'localhost',
-      database = 'bdvpoos',
+      database = 'admin_empleados',
       user = 'dbuservpoos', 
       password = '12345678'
     )
