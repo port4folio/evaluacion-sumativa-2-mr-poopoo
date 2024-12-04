@@ -31,32 +31,32 @@ def actualizar_proyecto(proyecto):
             cursor=conn.cursor()
             # Update Tabla Departamento
             cursor.execute("UPDATE departamento SET nombre=%s,descripcion=%s,gerente=%s WHERE id=%s",
-                        (departamento.get_nombre(),departamento.get_descripcion(),departamento.get_gerente(), departamento.get_id()))
+                        (proyecto.get_nombre(),proyecto.get_descripcion(),proyecto.get_gerente(), proyecto.get_id()))
             conn.commit()
-            print("Departamento actualizado")
+            print("Proyecto actualizado")
     except Exception as e:
         print(f"No se agregaron registros {e}")
     finally:
         cursor.close()
         conn.close()
 
-def buscar_departamento(nombre):
+def buscar_proyecto(nombre):
     conn=conectar()
     try:
         if conn is not None:
             cursor=conn.cursor()
-            # Select Tabla Departamento
+            # Select Tabla proyecto
             cursor.execute(
-                "SELECT id,nombre,descripcion,gerente FROM departamento WHERE nombre=%s",
+                "SELECT id,nombre,descripcion,gerente FROM proyecto WHERE nombre=%s",
                 (nombre)
                 )
-            departamento=cursor.fetchone()
-            if departamento is not None:
-                departamento_encontrado=Departamento(departamento[1],departamento[2],departamento[3])
-                departamento_encontrado.set_id(departamento[0])
+            proyecto=cursor.fetchone()
+            if proyecto is not None:
+                proyecto_encontrado=Proyecto(proyecto[1],proyecto[2],proyecto[3])
+                proyecto_encontrado.set_id(proyecto[0])
             else:
-                departamento_encontrado=None
-            return departamento_encontrado
+                proyecto_encontrado=None
+            return proyecto_encontrado
         else:
             return None
     except Exception as e:
@@ -65,20 +65,20 @@ def buscar_departamento(nombre):
         cursor.close()
         conn.close()
 
-def obtener_departamentos():
+def obtener_proyecto():
     conn=conectar()
     try:
         if conn is not None:
             cursor=conn.cursor()
-            cursor.execute("SELECT id,nombre,descripcion,gerente FROM departamento")
-            departamento_encontrado = cursor.fetchall()
-            departamento = []
-            if len(departamento_encontrado) > 0:
-                for departamento in departamento_encontrado:
-                    departamento_encontrado=Departamento(departamento[1],departamento[2],departamento[3])
-                    departamento_encontrado.set_id(departamento[0])
-                    departamento.append(departamento_encontrado)
-                return departamento
+            cursor.execute("SELECT id,nombre,descripcion,gerente FROM proyecto")
+            proyecto_encontrado = cursor.fetchall()
+            proyecto = []
+            if len(proyecto_encontrado) > 0:
+                for proyecto in proyecto_encontrado:
+                    proyecto_encontrado=Proyecto(proyecto[1],proyecto[2],proyecto[3])
+                    proyecto_encontrado.set_id(proyecto[0])
+                    proyecto.append(proyecto_encontrado)
+                return proyecto
             else:
                 return None
         else:
@@ -89,14 +89,14 @@ def obtener_departamentos():
         cursor.close()
         conn.close()
 
-def eliminar_departamento(nombre):
+def eliminar_proyecto(nombre):
     conn=conectar()
     try:
         if conn is not None:
             cursor=conn.cursor()
-            cursor.execute("DELETE FROM departamento WHERE nombre = %s",(nombre))
+            cursor.execute("DELETE FROM proyecto WHERE nombre = %s",(nombre))
             conn.commit()
-            print("Departamento eliminado")
+            print("Proyecto eliminado")
     except Exception as e:
         print(f"No se eliminaron registros {e}")
     finally:
