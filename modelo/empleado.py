@@ -1,7 +1,7 @@
 from datetime import datetime
 
 class Empleado:
-    def __init__(self, nombres, paterno, materno, telefono, correo, direccion, comuna, id_departamento, fecha_inicio , sueldo):
+    def __init__(self, nombres, paterno, materno, telefono, correo, direccion, comuna, fecha_inicio , sueldo):
         self.__id=0
         self.__nombres= nombres
         self.__paterno= paterno
@@ -10,7 +10,7 @@ class Empleado:
         self.__correo=correo
         self.__direccion= direccion
         self.__comuna= comuna
-        self.__id_departamento=id_departamento
+        self.__id_departamento=0
         self.__fecha_inicio= fecha_inicio
         self.__sueldo=sueldo
         self.__proyecto=[]
@@ -19,6 +19,9 @@ class Empleado:
     def get_id(self):
         return self.__id
     
+    def get_id_departamento(self):
+        return self.__id_departamento
+
     def getNombres(self):
         return self.__nombres
     
@@ -39,9 +42,6 @@ class Empleado:
     
     def get_comuna(self):
         return self.__comuna
-    
-    def get_departamento(self):
-        return self.__departamento
        
     def get_fecha_inicio(self):
         return self.__fecha_inicio
@@ -57,6 +57,9 @@ class Empleado:
 
     def set_id(self,id):
         self.__id=id
+    
+    def set_id_departamento(self,id_departamento):
+        self.__id_departamento=id_departamento
 
     def set_nombres(self,nombres):
         self.__nombres=nombres
@@ -75,9 +78,6 @@ class Empleado:
     
     def set_sueldo(self,sueldo):
         self.__sueldo=sueldo
-    
-    def set_departamento(self,departamento):
-        self.__departamento=departamento
 
     def set_proyecto(self,proyecto):
         self.__proyecto=proyecto

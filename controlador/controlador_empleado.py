@@ -8,9 +8,9 @@ def agregar_empleado(empleado):
             cursor = conn.cursor()  
             # Insert Tabla Empleados
             cursor.execute(
-                "INSERT INTO empleado (nombre, direccion, telefono, correo, fecha_inicio, sueldo) VALUES (%s, %s, %s, %s, %s, %s)",
-                (empleado.getNombre(), empleado.getDireccion(), empleado.getTelefono(), 
-                 empleado.getCorreo(), empleado.get_fecha_inicio(), empleado.get_sueldo())
+                "INSERT INTO empleado (nombres, paterno, materno, telefono, correo, direccion, comuna, fecha_inicio, sueldo) VALUES (%s, %s, %s, %s, %s, %s,%s,%s,%s)",
+                (empleado.getNombres(), empleado.getPaterno(), empleado.getMaterno(),empleado.getTelefono(), empleado.getCorreo(), empleado.getDireccion(), 
+                 empleado.getComuna(), empleado.get_fecha_inicio(), empleado.get_sueldo())
             )
             conn.commit()
             print("Empleado ingresado")
@@ -30,8 +30,10 @@ def actualizar_empleado(empleado):
         if conn is not None:
             cursor=conn.cursor()
             # Update Tabla Empleado
-            cursor.execute("UPDATE empleado SET nombre=%s,direccion=%s,telefono=%s, correo=%s, fecha_inicio=%s, sueldo=%s WHERE id=%s",
-                        (empleado.getNombre(),empleado.getDireccion(),empleado.getTelefono(),empleado.getCorreo(), empleado.get_fecha_inicio(), empleado.get_sueldo(), empleado.get_id()))
+            cursor.execute("UPDATE empleado SET nombres=%s, paterno=%s, materno=%s, telefono=%s, correo=%s, direccion=%s, comuna=%s, fecha_inicio=%s, sueldo=%s WHERE id=%s",
+                        (empleado.getNombres(), empleado.getPaterno(), empleado.getMaterno(),empleado.getTelefono(), empleado.getCorreo(), empleado.getDireccion(), 
+                 empleado.getComuna(), empleado.get_fecha_inicio(), empleado.get_sueldo())
+            )
             conn.commit()
             print("Empleado actualizado")
     except Exception as e:
@@ -47,7 +49,7 @@ def buscar_empleado(nombre):
             cursor=conn.cursor()
             # Select Tabla Empleados
             cursor.execute(
-                "SELECT id,nombre,direccion,telefono,correo,fecha_inicio,sueldo FROM empleado WHERE nombre=%s",
+                "SELECT id,nombres, paterno, materno, telefono, correo,direccion, comuna, fecha_inicio,sueldo FROM empleado WHERE nombre=%s",
                 (nombre,)
                 )
             empleado=cursor.fetchone()
@@ -65,32 +67,32 @@ def buscar_empleado(nombre):
         cursor.close()
         conn.close()
 
-# def crear_tabla():#Función para crear las tablas en la base de datos
-# conn = conectar()
-# if conn is None:
-# return
-# cursor = conn.cursor()
-# cursor.execute('''
-# CREATE TABLE IF NOT EXISTS empleado (
-# id INT AUTO_INCREMENT PRIMARY KEY,
-# nombre VARCHAR(255) NOT NULL,
-# direccion VARCHAR(255) NOT NULL,
-# telefono VARCHAR(20) NOT NULL,
-# correo VARCHAR(255) NOT NULL,
-# fecha_inicio DATE NOT NULL,
-# sueldo FLOAT NOT NULL
-# )
-# ''')
-# conn.commit()
-# cursor.close()
-# conn.close() 
+def crear_tabla():#Función para crear las tablas en la base de datos
+  conn = conectar()
+  if conn is None:
+    return
+  cursor = conn.cursor()
+  cursor.execute('''
+  CREATE TABLE IF NOT EXISTS empleado (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(255) NOT NULL,
+  direccion VARCHAR(255) NOT NULL,
+  telefono VARCHAR(20) NOT NULL,
+  correo VARCHAR(255) NOT NULL,
+  fecha_inicio DATE NOT NULL,
+  sueldo FLOAT NOT NULL
+  )
+  ''')
+  conn.commit()
+  cursor.close()
+  conn.close() 
     
 def obtener_empleados():
     conn=conectar()
     try:
         if conn is not None:
             cursor=conn.cursor()
-            cursor.execute("SELECT id,nombre,direccion,telefono,correo,fecha_inicio,sueldo FROM empleado")
+            cursor.execute("SELECT id,nombres,paterno,materno,telefono,correo,direccion,comuna,fecha_inicio,sueldo FROM empleado")
             empleados_encontrados = cursor.fetchall()
             empleados = []
             if len(empleados_encontrados) > 0:

@@ -14,13 +14,16 @@ def menu():
     return op
 
 def add_empleado():
-    nombre=input("Ingrese nombre : ")
-    direccion=input("Ingrese direccion: ")
+    nombres=input("Ingrese nombre : ")
+    paterno=input("Ingrese apellido paterno: ")
+    materno=input("Ingrese apellido materno: ")
     telefono=input("Ingrese telefono: ")
     correo= input("Ingrese correo: ")
+    direccion= input("Ingrese direccion: ")
+    comuna= input("Ingrese comuna: ")
     fecha_inicio= input("Ingrese fecha de inicio: ")
     sueldo=input("Ingrese sueldo: ")
-    empleado=Empleado(nombre,direccion,telefono,correo,fecha_inicio,sueldo)
+    empleado=Empleado(nombres, paterno,materno,telefono,correo,direccion,comuna,fecha_inicio,sueldo)
     agregar_empleado(empleado)
 
 def search_empleado():
@@ -32,28 +35,43 @@ def edit_empleado():
     empleado=search_empleado()
     if empleado is not None:
         print("Menu editar")
-        print("1. Nombre")
-        print("2. Direccion")
-        print("3. Telefono")
-        print("4. Correo")
+        print("1. Nombres")
+        print("2. Paterno")
+        print("3. Materno")
+        print("4. Telefono")
+        print("5. Correo")
+        print("6. Direccion")
+        print("7. Comuna")
         print("0. Salir")
         op=int(input("Seleccione una opcion: "))
         if op==1:
-            print(f"El nombre actual es: {empleado.getNombre()}")
-            nombre=input("Ingrese nuevo nombre: ")
-            empleado.setNombre(nombre)
+            print(f"Sus nombres actuales son: {empleado.getNombres()}")
+            nombre=input("Ingrese nuevos nombres: ")
+            empleado.setNombres(nombre)
         elif op==2:
-            print(f"Su direccion actual es: {empleado.getDireccion()}")
-            direc=input("Ingrese nueva direccion")
-            empleado.setDireccion(direc)
+            print(f"Su apellido paterno actual es: {empleado.getPterno()}")
+            paterno=input("Ingrese nuevo apellido paterno: ")
+            empleado.setPaterno(paterno)
         elif op==3:
+            print(f"Su apellido materno actual es: {empleado.getMaterno()}")
+            materno=input("Ingrese nuevo apellido materno: ")
+            empleado.setMaterno(materno)
+        elif op==4:
             print(f"Su Telefono actual es : {empleado.getTelefono()}")
             tel=input("Ingrese nuevo telefono:")
             empleado.setTelefono(tel)
-        elif op==4:
+        elif op==5:
             print(f"Su correo actual es: {empleado.getCorreo()}")
             correo=input("Ingrese nuevo correo: ")
             empleado.setCorreo(correo)
+        elif op==6:
+            print(f"Su direccion actual es: {empleado.getDireccion()}")
+            direc=input("Ingrese su nueva direccion: ")
+            empleado.setDireccion(direc)
+        elif op==7:
+            print(f"Su comuna actual es: {empleado.getComuna()}")
+            comuna=input("Ingrese su nueva comuna: ")
+            empleado.setComuna(comuna)
         else:
             print("No se realizaron cambios.")
         actualizar_empleado(empleado)    
