@@ -2,8 +2,49 @@ from vistas.vista_empleado import main_empleado
 #from vistas.vista_proyecto import main_pryecto
 #from vistas.vista_departamento import main_departamento
 #from vistas.vista_registro_tiempo import main_registro_tiempo
+from controlador.controlador_usuario import *
 
-def informe():
+def Login():
+    controlador_usuario = Registro()
+
+    while True:
+        print("1.Registro")
+        print("2.Inicio de sesion")
+        print("3.salir")
+        try:
+            opcion = int(input("seleccione una opcion:"))
+
+            if opcion == 1:
+                correo = input("Ingrese su correo: ")
+                contrasena = input("Ingrese su contraseña: ")
+                if controlador_usuario.crear_usuario(correo, contrasena):
+                        print("BIENVENIDO!")
+                        print("Redirigiendo a INICIO DE SESIÓN...")
+                        continue
+
+            elif opcion == 2:
+                    correo = input("Ingrese su correo: ")
+                    contrasena = input("Ingrese su contraseña: ")
+
+                    if  controlador_usuario.autentificar_usuario (correo, contrasena):
+                        print("BIENVENIDO!, autentificacion exitosa")
+                        menu_principal()
+                        break
+                    else:
+                        print("credenciales incorrectas, intente nuevamente")
+
+            elif opcion == 3:
+                    print("saliendo del programa. !hasta luego!")
+                    break
+            else:
+                print("Opción no válida, intente nuevamente.")
+        except ValueError:
+            print("Error: Debe ingresar un número para seleccionar una opción.")
+
+Login()
+
+
+def menu_principal():
     print("Informe principal")
     print("1.- Empleados")
     print("2.- Proyectos")
@@ -15,7 +56,7 @@ def informe():
     return op
 
 while True:
-    op=informe()
+    op=menu_principal()
     if op==1:
         main_empleado()
     #elif op==2:

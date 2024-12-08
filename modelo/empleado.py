@@ -40,7 +40,7 @@ class Empleado:
     def getDireccion(self):
         return self.__direccion
     
-    def get_comuna(self):
+    def getComuna(self):
         return self.__comuna
        
     def get_fecha_inicio(self):
@@ -61,17 +61,26 @@ class Empleado:
     def set_id_departamento(self,id_departamento):
         self.__id_departamento=id_departamento
 
-    def set_nombres(self,nombres):
+    def setNombres(self,nombres):
         self.__nombres=nombres
     
-    def setDireccion(self,direccion):
-        self.__direccion=direccion
+    def setPaterno(self,paterno):
+        self.__paterno=paterno
+    
+    def setMaterno(self,materno):
+        self.__materno=materno
     
     def setTelefono(self,telefono):
         self.__telefono=telefono
 
     def setCorreo(self,correo):
         self.__correo=correo
+
+    def setDireccion(self,direccion):
+        self.__direccion=direccion
+    
+    def setComuna(self,comuna):
+        self.__comuna=comuna
     
     def set_fecha_inicio(self,fecha_inicio):
         self.__fecha_inicio=fecha_inicio
@@ -85,4 +94,4 @@ class Empleado:
 
 
     def __str__(self):
-        return f"Nombre: {self.__nombres}\nDireccion: {self.__direccion}\nTelefono{self.__telefono}\nCorreo {self.__correo}\n {self.__fecha_inicio}\nSueldo {self.__sueldo}"
+        return f"Nombres: {self.__nombres}\nPaterno: {self.__paterno}\nMaterno: {self.__materno}\nTelefono{self.__telefono}\nCorreo {self.__correo}\nDireccion: {self.__direccion}\nComuna: {self.__comuna}\nFecha de incio: {self.__fecha_inicio}\nSueldo {self.__sueldo}"
