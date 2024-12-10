@@ -1,10 +1,10 @@
 #CaDe secure implementations
 #made by camelydev
 
-import Calgorithm as Calgo      # Algoritmo custom que se basa en un número de movimientos para llegar al caracter en teclado qwerty
+import seguridad.Calgorithm as Calgo      # Algoritmo custom que se basa en un número de movimientos para llegar al caracter en teclado qwerty
 #import CaesarImp as Caesar     # Una simple implementación del cifrado Caesar. Aquí NO usaremos caesar, ya que reemplaza algunos caracteres como los números.
-import HashImp as Hash          # Una simple implementación del hash SHA256
-import MoliCipher as Moli       # Cifrado custom que se basa en reemplazar texto por números y puntos
+import seguridad.HashImp as Hash          # Una simple implementación del hash SHA256
+import seguridad.MoliCipher as Moli       # Cifrado custom que se basa en reemplazar texto por números y puntos
 
 def SecondChar(msg):
     #print(msg)
