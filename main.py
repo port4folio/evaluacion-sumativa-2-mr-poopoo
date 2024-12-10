@@ -23,9 +23,7 @@ def Login():
             opcion = int(input("Seleccione una opción: "))
 
             if opcion == 1:
-                printer([
-                    ["-- Menú Registro --", None, clean()]
-                ])
+                printer()
                 correo = input("Ingrese su correo: ")
                 contrasena = input("Ingrese su contraseña: ")
                 if controlador_usuario.crear_usuario(correo, contrasena):
@@ -87,7 +85,7 @@ def menu_principal():
         ["0. Salir",
          None, None],
         ["Seleccione una opción.",
-         None, None],
+         None, None]
     ])
     op=int(input("Opción: "))
     return op

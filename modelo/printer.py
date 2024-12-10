@@ -57,7 +57,7 @@ def printer(argumento = None, tipo = None):
                 printl(argumento)
             else:
                 # Limpiar pantalla
-                printl([["",None,clean()]])
+                printl([[clean(),None,None]])
         case 0:
             # Mostrar un éxito con una operación
             if argumento != None:

@@ -33,4 +33,4 @@ class Departamento:
 
 
     def __str__(self):
-        return f"Nombre {self.__nombre}\nGerente {self.__gerente}"             
+        return f"Nombre {self.__nombre}\nGerente {self.__gerente}\n"             

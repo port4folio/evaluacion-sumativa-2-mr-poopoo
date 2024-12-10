@@ -25,4 +25,4 @@ class Usuario:
 
 
     def __str__(self):
-        return f"Id: {self.__id}\nCorreo: {self.__correo}\n Contraseña: {self.__contraseña}"
+        return f"Id: {self.__id}\nCorreo: {self.__correo}\n Contraseña: {self.__contraseña}\n"
