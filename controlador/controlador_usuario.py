@@ -2,6 +2,8 @@
 from modelo.db import conectar
 from seguridad.CaDe_Main import CaDeMain
 from modelo.printer import printer
+from email_validator import validate_email, EmailNotValidError
+from seguridad.check_contraseña import Validar
 
 class Registro:
 
@@ -24,10 +26,20 @@ class Registro:
                 #print("El correo y la contraseña son obligatorios, por favor ingresarlos a continuacion:")
                 printer(tipo=2,argumento="El correo y la contraseña son obligatorios.")
                 return False
-
+            
+            try:
+                validate_email(correo,check_deliverability=True)
+            except EmailNotValidError as e:
+                printer(tipo=2,argumento="El correo no es válido. Código de error: " + str(e))
+                return False
+            #checkear que la contraseña sea correcta
+            if (Validar(contraseña) == False):
+                printer(tipo=2,argumento="La contraseña no es válida. Debe contener al menos:\n8 caracteres, 1 mayúscula, 1 número y 1 símbolo especial (?, !, $)")
+                return False
             # Generar hash de la contraseña
             hash_contraseña = CaDeMain(contraseña)
 
+            #conectar
             conn = conectar()
             cursor = conn.cursor()
             cursor.execute("INSERT INTO usuarios (correo, contrasena) VALUES (%(correo)s, %(contrasena)s)", {'correo': correo, 'contrasena': hash_contraseña})
