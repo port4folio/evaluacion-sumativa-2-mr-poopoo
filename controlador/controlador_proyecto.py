@@ -30,15 +30,15 @@ def actualizar_proyecto(proyecto = Proyecto):
     try:
         if conn is not None:
             cursor=conn.cursor()
-            # Update Tabla Departamento
-            cursor.execute("UPDATE departamento SET nombre=%s,descripcion=%s,gerente=%s WHERE id=%s",
-                        (proyecto.get_nombre(),proyecto.get_descripcion(),proyecto.get_gerente(), proyecto.get_id()))
+            # Update Tabla Proyecto
+            cursor.execute("UPDATE proyecto SET nombre_proyecto=%s,descripcion_proyecto=%s,fecha_inicio=%s WHERE id_proyecto=%s",
+                        (proyecto.get_nombre_proyecto(),proyecto.get_descripcion_proyecto(),proyecto.get_fecha_inicio(), proyecto.get_id()))
             conn.commit()
             #print("Proyecto actualizado")
             printer(tipo=0,argumento="Proyecto actualizado.")
     except Exception as e:
         #print(f"No se agregaron registros {e}")
-        printer(tipo=2,argumento="No se agregaron registros. Código de error: \n" + str(e))
+        printer(tipo=2,argumento="No se actualizaron registros. Código de error: \n" + str(e))
     finally:
         cursor.close()
         conn.close()
@@ -50,7 +50,7 @@ def buscar_proyecto(nombre):
             cursor=conn.cursor()
             # Select Tabla proyecto
             cursor.execute(
-                "SELECT id,nombre,descripcion,gerente FROM proyecto WHERE nombre=%s",
+                "SELECT id_proyecto,nombre_proyecto,descripcion_proyecto,fecha_inicio FROM proyecto WHERE nombre_proyecto=%s",
                 (nombre)
                 )
             proyecto=cursor.fetchone()
@@ -64,7 +64,7 @@ def buscar_proyecto(nombre):
             return None
     except Exception as e:
         #print(f"Error al conectar. {e}")
-        printer(tipo=2,argumento="No se ha podido conectar. Código de error:\n" + str(e))
+        printer(tipo=2,argumento="No se ha podido obtener el proyecto. Código de error:\n" + str(e))
     finally:
         cursor.close()
         conn.close()
@@ -74,7 +74,7 @@ def obtener_proyectos():
     try:
         if conn is not None:
             cursor=conn.cursor()
-            cursor.execute("SELECT id,nombre,descripcion,gerente FROM proyecto")
+            cursor.execute("SELECT id_proyecto,nombre_proyecto,descripcion_proyecto,fecha_inicio FROM proyecto")
             proyecto_encontrado = cursor.fetchall()
             proyecto_lista = []
             if len(proyecto_encontrado) > 0:
@@ -89,7 +89,7 @@ def obtener_proyectos():
             return None
     except Exception as e:
         #print(f"Error al conectar. {e}")
-        printer(tipo=2,argumento="Error al conectar. Código de error:\n" + str(e))
+        printer(tipo=2,argumento="Error al obtener. Código de error:\n" + str(e))
     finally:
         cursor.close()
         conn.close()
@@ -99,7 +99,7 @@ def eliminar_proyecto(nombre):
     try:
         if conn is not None:
             cursor=conn.cursor()
-            cursor.execute("DELETE FROM proyecto WHERE nombre = %s",(nombre))
+            cursor.execute("DELETE FROM proyecto WHERE nombre_proyecto = %s",(nombre))
             conn.commit()
             #print("Proyecto eliminado")
             printer(tipo=0,argumento="Proyecto eliminado correctamente.")

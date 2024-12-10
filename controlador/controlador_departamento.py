@@ -15,14 +15,14 @@ def agregar_departamento(departamento = Departamento):
             )
             conn.commit()
             #print("Departamento ingresado")
+            printer(tipo=0,argumento="Departamento ingresado correctamente.")
             #TODO seguir con este controlador
     except Exception as e:
-        print(f"No se agregaron registros {e}")
+        #print(f"No se agregaron registros {e}")
+        printer(tipo=2,argumento="No se agregaron registros. Código de error:\n" + str(e))
     finally:
-
         if cursor:
             cursor.close()
-        
         if conn:
             conn.close()
 
@@ -35,9 +35,11 @@ def actualizar_departamento(departamento = Departamento):
             cursor.execute("UPDATE departamento SET nombre=%s,descripcion=%s,gerente=%s WHERE id_departamento=%s",
                         (departamento.get_nombre(),departamento.get_descripcion(),departamento.get_gerente(), departamento.get_id_departamento()))
             conn.commit()
-            print("Departamento actualizado")
+            #print("Departamento actualizado")
+            printer(tipo=0,argumento="Departamento actualizado correctamente.")
     except Exception as e:
-        print(f"No se agregaron registros {e}")
+        #print(f"No se agregaron registros {e}")
+        printer(tipo=2,argumento="No se actualizaron registros. Código de error:\n" + str(e))
     finally:
         cursor.close()
         conn.close()
@@ -62,7 +64,8 @@ def buscar_departamento(nombre):
         else:
             return None
     except Exception as e:
-        print(f"Error al conectar. {e}")
+        #print(f"Error al conectar. {e}")
+        printer(tipo=2,argumento="No se obtuvieron registros. Código de error:\n" + str(e))
     finally:
         cursor.close()
         conn.close()
@@ -73,10 +76,10 @@ def obtener_departamentos():
         if conn is not None:
             cursor=conn.cursor()
             cursor.execute("SELECT id_departamento,nombre,descripcion,gerente FROM departamento")
-            departamento_encontrado = cursor.fetchall()
+            departamentos_encontrados = cursor.fetchall()
             departamento_lista = []
             if len(departamento_encontrado) > 0:
-                for departamento in departamento_encontrado:
+                for departamento in departamentos_encontrados:
                     departamento_encontrado=Departamento(departamento[1],departamento[2],departamento[3])
                     departamento_encontrado.set_id_departamento(departamento[0])
                     departamento_lista.append(departamento_encontrado)
@@ -87,7 +90,7 @@ def obtener_departamentos():
             return None
     except Exception as e:
         #print(f"Error al conectar. {e}")
-        printer()
+        printer(tipo=2,argumento="No se obtuvieron registros. Código de error:\n" + str(e))
     finally:
         cursor.close()
         conn.close()
@@ -99,9 +102,11 @@ def eliminar_departamento(nombre):
             cursor=conn.cursor()
             cursor.execute("DELETE FROM departamento WHERE nombre = %s",(nombre))
             conn.commit()
-            print("Departamento eliminado")
+            #print("Departamento eliminado")
+            printer(tipo=0,argumento="Departamento eliminado correctamente.")
     except Exception as e:
-        print(f"No se eliminaron registros {e}")
+        #print(f"No se eliminaron registros {e}")
+        printer(tipo=2,argumento="No se eliminaron registros. Código de error:\n" + str(e))
     finally:
         cursor.close()
         conn.close()
