@@ -1,5 +1,6 @@
 from modelo.usuario import Usuario
 from modelo.db import conectar
+from seguridad.CaDe_Main import CaDeMain
 import bcrypt
 
 class Registro:
