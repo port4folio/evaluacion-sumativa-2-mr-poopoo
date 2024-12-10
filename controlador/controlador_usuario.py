@@ -30,7 +30,7 @@ class Registro:
 
             conn = conectar()
             cursor = conn.cursor()
-            cursor.execute("INSERT INTO usuarios (correo, contrasena) VALUES (%(correo)s, %(contraseña)s)", {'correo': correo, 'contraseña': hash_contraseña})
+            cursor.execute("INSERT INTO usuarios (correo, contrasena) VALUES (%(correo)s, %(contrasena)s)", {'correo': correo, 'contrasena': hash_contraseña})
             conn.commit()
 
             #print(f"Usuario con correo {correo} creado exitosamente.")
@@ -53,7 +53,7 @@ class Registro:
         try:
             conn = conectar()
             cursor = conn.cursor()
-            cursor.execute("SELECT contraseña FROM usuarios WHERE correo = %(correo)s", {'correo': correo})
+            cursor.execute("SELECT contrasena FROM usuarios WHERE correo = %(correo)s", {'correo': correo})
             resultado = cursor.fetchone()
             if resultado is None:
                 #print("Usuario no encontrado.")

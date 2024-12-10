@@ -8,9 +8,9 @@ def printl(lista_texto):
         if lista[i][2] == None:
             lista[i][2] = ""
         if lista[i][1] == None:
-            lista[i][2] = t.bright_white
+            lista[i][1] = t.bright_white
         if lista[i][0] == None:
-            lista[i][2] = "---"
+            lista[i][0] = "---"
         print(f"{lista[i][2]}{lista[i][1]}{lista[i][0]}{t.normal}")
 
 def clean():

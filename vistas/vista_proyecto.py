@@ -1,5 +1,5 @@
 from modelo.proyecto import Proyecto
-from controlador.controlador_proyecto import agregar_proyecto, crear_tabla, buscar_proyecto, actualizar_proyecto, obtener_proyectos, eliminar_proyecto
+from controlador.controlador_proyecto import agregar_proyecto, buscar_proyecto, actualizar_proyecto, obtener_proyectos, eliminar_proyecto
 from modelo.printer import printer, clean
 def menu():
     #print("Menu proyecto")

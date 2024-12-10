@@ -1,4 +1,5 @@
 from vistas.vista_empleado import main_empleado
+from vistas.vista_proyecto import main_proyecto
 #from vistas.vista_proyecto import main_pryecto
 #from vistas.vista_departamento import main_departamento
 #from vistas.vista_registro_tiempo import main_registro_tiempo
@@ -12,12 +13,9 @@ def Login():
         #print("2.Inicio de sesion")
         #print("3.salir")
         printer([
-            ["1. Registro",
-             None, clean()],
-            ["2. Inicio de sesión",
-             None, None],
-            ["3. Salir",
-             None, None]
+            ["1. Registro", None, clean()],
+            ["2. Inicio de sesión", None, None],
+            ["3. Salir", None, None]
         ])
         try:
             opcion = int(input("Seleccione una opción: "))
@@ -42,7 +40,6 @@ def Login():
                     if controlador_usuario.autentificar_usuario (correo, contrasena):
                         #print("BIENVENIDO!, autentificacion exitosa")
                         printer(tipo=0, argumento="Autentificación correcta.")
-                        menu_principal()
                         break
                     else:
                         #print("credenciales incorrectas, intente nuevamente")
@@ -53,7 +50,7 @@ def Login():
             elif opcion == 3:
                     #print("saliendo del programa. !hasta luego!")
                     printer(tipo=0,argumento="Saliendo del programa, hasta luego!")
-                    break
+                    exit()
             else:
                 #print("Opción no válida, intente nuevamente.")
                 printer(tipo=1,argumento="Opción no válida, intente nuevamente.")
@@ -72,20 +69,13 @@ def menu_principal():
     #print("0.- Salir")
     #print("Seleccione una opción: ")
     printer([
-        ["-- Informe Principal --",
-         None, clean()],
-        ["1. Empleados",
-         None, None],
-        ["2. Proyectos",
-         None, None],
-        ["3. Departamentos",
-         None, None],
-        ["4. Registro de tiempo",
-         None, None],
-        ["0. Salir",
-         None, None],
-        ["Seleccione una opción.",
-         None, None]
+        ["-- Informe Principal --", None, clean()],
+        ["1. Empleados", None, None],
+        ["2. Proyectos",None, None],
+        ["3. Departamentos",None, None],
+        ["4. Registro de tiempo",None, None],
+        ["0. Salir", None, None],
+        ["Seleccione una opción.", None, None]
     ])
     op=int(input("Opción: "))
     return op
@@ -95,8 +85,7 @@ while True:
     if op==1:
         main_empleado()
     elif op==2:
-        #main_pryecto()
-        printer(tipo=1)
+        main_proyecto()
     elif op==3:
         printer(tipo=1)
         # main_departamento()
