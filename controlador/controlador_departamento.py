@@ -1,6 +1,7 @@
 from modelo.db import conectar
 from modelo.departamento import Departamento
-def agregar_departamento(departamento):
+from modelo.printer import printer
+def agregar_departamento(departamento = Departamento):
     conn = conectar()
     cursor = None
     try:
@@ -13,7 +14,8 @@ def agregar_departamento(departamento):
                 )
             )
             conn.commit()
-            print("Departamento ingresado")
+            #print("Departamento ingresado")
+            #TODO seguir con este controlador
     except Exception as e:
         print(f"No se agregaron registros {e}")
     finally:
@@ -24,14 +26,14 @@ def agregar_departamento(departamento):
         if conn:
             conn.close()
 
-def actualizar_departamento(departamento):
+def actualizar_departamento(departamento = Departamento):
     conn=conectar()
     try:
         if conn is not None:
             cursor=conn.cursor()
             # Update Tabla Departamento
-            cursor.execute("UPDATE departamento SET nombre=%s,descripcion=%s,gerente=%s WHERE id=%s",
-                        (departamento.get_nombre(),departamento.get_descripcion(),departamento.get_gerente(), departamento.get_id()))
+            cursor.execute("UPDATE departamento SET nombre=%s,descripcion=%s,gerente=%s WHERE id_departamento=%s",
+                        (departamento.get_nombre(),departamento.get_descripcion(),departamento.get_gerente(), departamento.get_id_departamento()))
             conn.commit()
             print("Departamento actualizado")
     except Exception as e:
@@ -47,13 +49,13 @@ def buscar_departamento(nombre):
             cursor=conn.cursor()
             # Select Tabla Departamento
             cursor.execute(
-                "SELECT id,nombre,descripcion,gerente FROM departamento WHERE nombre=%s",
+                "SELECT id_departamento,nombre,descripcion,gerente FROM departamento WHERE nombre=%s",
                 (nombre)
                 )
             departamento=cursor.fetchone()
             if departamento is not None:
                 departamento_encontrado=Departamento(departamento[1],departamento[2],departamento[3])
-                departamento_encontrado.set_id(departamento[0])
+                departamento_encontrado.set_id_departamento(departamento[0])
             else:
                 departamento_encontrado=None
             return departamento_encontrado
@@ -70,21 +72,22 @@ def obtener_departamentos():
     try:
         if conn is not None:
             cursor=conn.cursor()
-            cursor.execute("SELECT id,nombre,descripcion,gerente FROM departamento")
+            cursor.execute("SELECT id_departamento,nombre,descripcion,gerente FROM departamento")
             departamento_encontrado = cursor.fetchall()
-            departamento = []
+            departamento_lista = []
             if len(departamento_encontrado) > 0:
                 for departamento in departamento_encontrado:
                     departamento_encontrado=Departamento(departamento[1],departamento[2],departamento[3])
-                    departamento_encontrado.set_id(departamento[0])
-                    departamento.append(departamento_encontrado)
-                return departamento
+                    departamento_encontrado.set_id_departamento(departamento[0])
+                    departamento_lista.append(departamento_encontrado)
+                return departamento_lista
             else:
                 return None
         else:
             return None
     except Exception as e:
-        print(f"Error al conectar. {e}")
+        #print(f"Error al conectar. {e}")
+        printer()
     finally:
         cursor.close()
         conn.close()

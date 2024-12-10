@@ -1,4 +1,4 @@
-from modelo.usuario import Usuario
+#from modelo.usuario import Usuario
 from modelo.db import conectar
 from seguridad.CaDe_Main import CaDeMain
 from modelo.printer import printer

@@ -1,6 +1,7 @@
 from modelo.db import conectar
 from modelo.proyecto import Proyecto
-def agregar_proeycto(proyecto):
+from modelo.printer import printer
+def agregar_proyecto(proyecto = Proyecto):
     conn = conectar()
     cursor = None
     try:
@@ -13,18 +14,18 @@ def agregar_proeycto(proyecto):
                 )
             )
             conn.commit()
-            print("Proyecto ingresado")
+            #print("Proyecto ingresado")
+            printer(tipo=0,argumento="Proyecto ingresado correctamente.")
     except Exception as e:
-        print(f"No se agregaron registros {e}")
+        #print(f"No se agregaron registros {e}")
+        printer(tipo=2,argumento="No se han ingresado registros. Código de error:\n" + str(e))
     finally:
-
         if cursor:
             cursor.close()
-        
         if conn:
             conn.close()
 
-def actualizar_proyecto(proyecto):
+def actualizar_proyecto(proyecto = Proyecto):
     conn=conectar()
     try:
         if conn is not None:
@@ -33,9 +34,11 @@ def actualizar_proyecto(proyecto):
             cursor.execute("UPDATE departamento SET nombre=%s,descripcion=%s,gerente=%s WHERE id=%s",
                         (proyecto.get_nombre(),proyecto.get_descripcion(),proyecto.get_gerente(), proyecto.get_id()))
             conn.commit()
-            print("Proyecto actualizado")
+            #print("Proyecto actualizado")
+            printer(tipo=0,argumento="Proyecto actualizado.")
     except Exception as e:
-        print(f"No se agregaron registros {e}")
+        #print(f"No se agregaron registros {e}")
+        printer(tipo=2,argumento="No se agregaron registros. Código de error: \n" + str(e))
     finally:
         cursor.close()
         conn.close()
@@ -60,31 +63,33 @@ def buscar_proyecto(nombre):
         else:
             return None
     except Exception as e:
-        print(f"Error al conectar. {e}")
+        #print(f"Error al conectar. {e}")
+        printer(tipo=2,argumento="No se ha podido conectar. Código de error:\n" + str(e))
     finally:
         cursor.close()
         conn.close()
 
-def obtener_proyecto():
+def obtener_proyectos():
     conn=conectar()
     try:
         if conn is not None:
             cursor=conn.cursor()
             cursor.execute("SELECT id,nombre,descripcion,gerente FROM proyecto")
             proyecto_encontrado = cursor.fetchall()
-            proyecto = []
+            proyecto_lista = []
             if len(proyecto_encontrado) > 0:
                 for proyecto in proyecto_encontrado:
                     proyecto_encontrado=Proyecto(proyecto[1],proyecto[2],proyecto[3])
                     proyecto_encontrado.set_id(proyecto[0])
-                    proyecto.append(proyecto_encontrado)
-                return proyecto
+                    proyecto_lista.append(proyecto_encontrado)
+                return proyecto_lista
             else:
                 return None
         else:
             return None
     except Exception as e:
-        print(f"Error al conectar. {e}")
+        #print(f"Error al conectar. {e}")
+        printer(tipo=2,argumento="Error al conectar. Código de error:\n" + str(e))
     finally:
         cursor.close()
         conn.close()
@@ -96,9 +101,11 @@ def eliminar_proyecto(nombre):
             cursor=conn.cursor()
             cursor.execute("DELETE FROM proyecto WHERE nombre = %s",(nombre))
             conn.commit()
-            print("Proyecto eliminado")
+            #print("Proyecto eliminado")
+            printer(tipo=0,argumento="Proyecto eliminado correctamente.")
     except Exception as e:
-        print(f"No se eliminaron registros {e}")
+        #print(f"No se eliminaron registros {e}")
+        printer(tipo=2,argumento="No se eliminaron registros. Código de error:\n" + str(e))
     finally:
         cursor.close()
         conn.close()
