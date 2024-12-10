@@ -12,7 +12,7 @@ def SecondChar(msg):
     #print(ch)
     return ord(ch)
 
-def CaDeMain(entryMsg):
+def CaDeMain(entryMsg) -> str:
     calgoMsg = Calgo.CalgorithmEncode(entryMsg)
     moliMsg = Moli.MoliEncode(calgoMsg)
     hashMsg = Hash.HashEncode(moliMsg)
