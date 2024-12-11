@@ -75,7 +75,7 @@ def edit_empleado():
             empleado.setNombres(nombre)
         elif op==2:
             printer()
-            print(f"Su apellido paterno actual es: {empleado.getPterno()}")
+            print(f"Su apellido paterno actual es: {empleado.getPaterno()}")
             paterno=input("Ingrese nuevo apellido paterno: ")
             empleado.setPaterno(paterno)
         elif op==3:

@@ -1,5 +1,6 @@
 from vistas.vista_empleado import main_empleado
 from vistas.vista_proyecto import main_proyecto
+from vistas.vista_registro_tiempo import main_registro_tiempo
 #from vistas.vista_proyecto import main_pryecto
 #from vistas.vista_departamento import main_departamento
 #from vistas.vista_registro_tiempo import main_registro_tiempo
@@ -95,7 +96,7 @@ while True:
             printer(tipo=1)
             # main_departamento()
         elif op==4:
-            printer(tipo=1)
+            main_registro_tiempo()
             # main_registro_tiempo()
         elif op==0:
             #print("Gracias")

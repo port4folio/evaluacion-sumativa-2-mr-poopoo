@@ -9,7 +9,7 @@ def agregar_proyecto(proyecto = Proyecto):
             cursor = conn.cursor()
             # Insert Tabla Proyecto
             cursor.execute(
-                "INSERT INTO proyecto (nombre_proyecto,descripcion_proyecto,fecha_inicio) VALUES (%s, %s, %s)", (proyecto.get_nombre_proyecto(), proyecto.get_descripcion_proyecto(), proyecto.get_fecha_inicio()))
+                "INSERT INTO proyecto (nombre_proyecto,descripcion_proyecto,fecha_inicio) VALUES (%s, %s, %s)", (proyecto.getNombre_proyecto(), proyecto.getDescripcion_proyecto(), proyecto.getFecha_inicio()))
             conn.commit()
             #print("Proyecto ingresado")
             printer(tipo=0,argumento="Proyecto ingresado correctamente.")
@@ -28,7 +28,7 @@ def actualizar_proyecto(proyecto = Proyecto):
         if conn is not None:
             cursor=conn.cursor()
             # Update Tabla Proyecto
-            cursor.execute("UPDATE proyecto SET nombre_proyecto=%s,descripcion_proyecto=%s,fecha_inicio=%s WHERE id_proyecto=%s", (proyecto.get_nombre_proyecto(),proyecto.get_descripcion_proyecto(),proyecto.get_fecha_inicio(), proyecto.get_id()))
+            cursor.execute("UPDATE proyecto SET nombre_proyecto=%s,descripcion_proyecto=%s,fecha_inicio=%s WHERE id_proyecto=%s", (proyecto.getNombre_proyecto(),proyecto.getDescripcion_proyecto(),proyecto.getFecha_inicio(), proyecto.getId()))
             conn.commit()
             #print("Proyecto actualizado")
             printer(tipo=0,argumento="Proyecto actualizado.")
@@ -78,7 +78,7 @@ def buscar_proyecto_id(id_proyecto):
             proyecto=cursor.fetchone()
             if proyecto is not None:
                 proyecto_encontrado=Proyecto(proyecto[1],proyecto[2],proyecto[3])
-                proyecto_encontrado.set_id(proyecto[0])
+                proyecto_encontrado.setId(proyecto[0])
             else:
                 proyecto_encontrado=None
             return proyecto_encontrado
@@ -104,7 +104,7 @@ def obtener_proyectos():
             if len(proyecto_encontrado) > 0:
                 for proyecto in proyecto_encontrado:
                     proyecto_encontrado=Proyecto(proyecto[1],proyecto[2],proyecto[3])
-                    proyecto_encontrado.set_id(proyecto[0])
+                    proyecto_encontrado.setId(proyecto[0])
                     proyecto_lista.append(proyecto_encontrado)
                 return proyecto_lista
             else:
