@@ -1,6 +1,7 @@
 from modelo.empleado import Empleado
 from controlador.controlador_empleado import agregar_empleado, crear_tabla, buscar_empleado, actualizar_empleado, obtener_empleados, eliminar_empleado
 from modelo.printer import printer, clean
+
 def menu():
     #print("Menu empleado")
     #print("1. Agregar")
@@ -33,7 +34,7 @@ def add_empleado():
     comuna= input("Ingrese comuna: ")
     fecha_inicio= input("Ingrese fecha de inicio: ")
     sueldo=input("Ingrese sueldo: ")
-    empleado=Empleado(nombres, paterno,materno,telefono,correo,direccion,comuna,fecha_inicio,sueldo)
+    empleado=Empleado(nombres,paterno,materno,telefono,correo,direccion,comuna,fecha_inicio,sueldo)
     agregar_empleado(empleado)
 
 def search_empleado():
@@ -111,13 +112,14 @@ def edit_empleado():
 def print_empleado():
     printer()
     empleado=search_empleado()
-    if empleado is not None:
+    if empleado != None:
         #print(empleado)
         printer([
             ["Empleado:\n",None,clean()],
             [empleado,None,None],
             ["Presiona ENTER para continuar...",None,None]
         ])
+        input()
     else:
         #print("Empleado no encontrado")
         printer(tipo=2,argumento="Empleado no encontrado.")
@@ -125,22 +127,25 @@ def print_empleado():
 def print_empleados():
     printer()
     empleados=obtener_empleados()
-    if len(empleados) > 0:
-        printer([
-            ["Empleados:\n",None,clean()],
-        ])
-        for empleado in empleados:
-            #print(empleado)
+    if empleados != None:
+        if len(empleados) > 0:
             printer([
-                [empleado, None,None]
+                ["Empleados:\n",None,clean()],
             ])
-        printer([
-            ["Presiona ENTER para continuar...",None,None]
-        ])
+            for empleado in empleados:
+                #print(empleado)
+                printer([
+                    [empleado, None,None]
+                ])
+            printer([
+                ["Presiona ENTER para continuar...",None,None]
+            ])
+            input()
+        else:
+            #print("No hay empleados ingresados")
+            printer(tipo=1,argumento="No hay empleados ingresados.")
     else:
-        #print("No hay empleados ingresados")
-        printer(tipo=2,argumento="No hay empleados ingresados.")
-
+        printer(tipo=2,argumento="Ha ocurrido un error al obtener los empleados.")
 def delete_empleado():
     printer()
     empleado=search_empleado()
@@ -165,21 +170,28 @@ def delete_empleado():
         printer(tipo=2,argumento="El empleado no ha sido encontrado.")
 
 
-def main_empleado():
+def main_empleado(datos):
     op= -1
     while op != 0:
         op=menu()
         if op == 1:
-            add_empleado()
+            if datos['is_admin'] == 1:
+                add_empleado()
+            else:
+                printer(tipo=1,argumento="Usted no está registrado como administrador.\nNo se ha podido realizar la operación.")
         elif op ==2:
-            edit_empleado()
+            if datos['is_admin'] == 1:
+                edit_empleado()
+            else:
+                printer(tipo=1,argumento="Usted no está registrado como administrador.\nNo se ha podido realizar la operación.")
         elif op==3:
             print_empleado()
         elif op==4:
             print_empleados()
         elif op==5:
-            delete_empleado()
-        elif op==9:
-            crear_tabla()
-
-
+            if datos['is_admin'] == 1:
+                delete_empleado()
+            else:
+                printer(tipo=1,argumento="Usted no está registrado como administrador.\nNo se ha podido realizar la operación.")
+        #elif op==9:
+        #    crear_tabla()

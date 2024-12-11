@@ -69,10 +69,10 @@ def printer(argumento = None, tipo = None):
             if argumento != None:
                 printw(argumento)
             else:
-                printw("Ha habido un error leve en la aplicación.")
+                printw("Ha ocurrido un error interno leve en la aplicación.")
         case 2:
             # Mostrar una alerta de un error grave
             if argumento != None:
                 printe(argumento)
             else:
-                printe("Ha habido un error grave en la aplicación.")
+                printe("Ha ocurrido un error interno grave en la aplicación.")

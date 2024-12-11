@@ -1,0 +1,22 @@
+"filename", "language", "Python", "Markdown", "pip requirements", "comment", "blank", "total"
+"/Users/cami1495/Documents/repos/evaluacion-sumativa-2-mr-poopoo/README.md", "Markdown", 0, 1, 0, 0, 1, 2
+"/Users/cami1495/Documents/repos/evaluacion-sumativa-2-mr-poopoo/controlador/controlador_departamento.py", "Python", 96, 0, 0, 12, 4, 112
+"/Users/cami1495/Documents/repos/evaluacion-sumativa-2-mr-poopoo/controlador/controlador_empleado.py", "Python", 117, 0, 0, 11, 5, 133
+"/Users/cami1495/Documents/repos/evaluacion-sumativa-2-mr-poopoo/controlador/controlador_proyecto.py", "Python", 92, 0, 0, 11, 4, 107
+"/Users/cami1495/Documents/repos/evaluacion-sumativa-2-mr-poopoo/controlador/controlador_registro_tiempo.py", "Python", 45, 0, 0, 7, 2, 54
+"/Users/cami1495/Documents/repos/evaluacion-sumativa-2-mr-poopoo/controlador/controlador_usuario.py", "Python", 161, 0, 0, 19, 7, 187
+"/Users/cami1495/Documents/repos/evaluacion-sumativa-2-mr-poopoo/main.py", "Python", 73, 0, 0, 27, 6, 106
+"/Users/cami1495/Documents/repos/evaluacion-sumativa-2-mr-poopoo/modelo/db.py", "Python", 15, 0, 0, 6, 3, 24
+"/Users/cami1495/Documents/repos/evaluacion-sumativa-2-mr-poopoo/modelo/departamento.py", "Python", 25, 0, 0, 0, 11, 36
+"/Users/cami1495/Documents/repos/evaluacion-sumativa-2-mr-poopoo/modelo/empleado.py", "Python", 65, 0, 0, 2, 30, 97
+"/Users/cami1495/Documents/repos/evaluacion-sumativa-2-mr-poopoo/modelo/printer.py", "Python", 66, 0, 0, 5, 7, 78
+"/Users/cami1495/Documents/repos/evaluacion-sumativa-2-mr-poopoo/modelo/proyecto.py", "Python", 29, 0, 0, 0, 12, 41
+"/Users/cami1495/Documents/repos/evaluacion-sumativa-2-mr-poopoo/modelo/registro_tiempo.py", "Python", 39, 0, 0, 2, 19, 60
+"/Users/cami1495/Documents/repos/evaluacion-sumativa-2-mr-poopoo/modelo/usuario.py", "Python", 0, 0, 0, 19, 1, 20
+"/Users/cami1495/Documents/repos/evaluacion-sumativa-2-mr-poopoo/requirements.txt", "pip requirements", 0, 0, 18, 0, 1, 19
+"/Users/cami1495/Documents/repos/evaluacion-sumativa-2-mr-poopoo/seguridad/CaDe_Main.py", "Python", 7, 0, 0, 17, 4, 28
+"/Users/cami1495/Documents/repos/evaluacion-sumativa-2-mr-poopoo/seguridad/check_contraseña.py", "Python", 16, 0, 0, 4, 4, 24
+"/Users/cami1495/Documents/repos/evaluacion-sumativa-2-mr-poopoo/vistas/vista_empleado.py", "Python", 160, 0, 0, 30, 7, 197
+"/Users/cami1495/Documents/repos/evaluacion-sumativa-2-mr-poopoo/vistas/vista_proyecto.py", "Python", 135, 0, 0, 38, 7, 180
+"/Users/cami1495/Documents/repos/evaluacion-sumativa-2-mr-poopoo/vistas/vista_registro_tiempo.py", "Python", 59, 0, 0, 7, 10, 76
+"Total", "-", 1200, 1, 18, 217, 145, 1581

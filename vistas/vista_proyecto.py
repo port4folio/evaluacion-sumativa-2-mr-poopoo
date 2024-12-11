@@ -111,22 +111,24 @@ def print_proyecto():
 def print_proyectos():
     printer()
     proyectos=obtener_proyectos()
-    if len(proyectos) > 0:
-        printer([
-            ["Proyectos:\n",None,clean()]
-        ])
-        for proyecto in proyectos:
+    if proyectos != None:
+        if len(proyectos) > 0:
             printer([
-                [proyecto,None,None]
+                ["Proyectos:\n",None,clean()]
             ])
-        printer([
-            ["Presiona ENTER para continuar...",None,None]
-        ])
-        input()
+            for proyecto in proyectos:
+                printer([
+                    [proyecto,None,None]
+                ])
+            printer([
+                ["Presiona ENTER para continuar...",None,None]
+            ])
+            input()
+        else:
+            #print("No hay proyectos ingresados")
+            printer(tipo=1,argumento="No hay proyectos ingresados.")
     else:
-        #print("No hay proyectos ingresados")
-        printer(tipo=1,argumento="No hay proyectos ingresados.")
-
+        printer(tipo=2,argumento="Ha ocurrido un error al obtener los proyectos.")
 def delete_proyecto():
     printer()
     proyecto=search_proyecto()
@@ -150,19 +152,28 @@ def delete_proyecto():
         #print("proyecto no encontrado")
         printer(tipo=2,argumento="No se ha podido encontrar el proyecto.")
 
-def main_proyecto():
+def main_proyecto(datos):
     op= -1
     while op != 0:
         op=menu()
         if op == 1:
-            add_proyecto()
+            if datos['is_admin'] == 1:
+                add_proyecto()
+            else:
+                printer(tipo=1,argumento="Usted no está registrado como administrador.\nNo se ha podido realizar la operación.")
         elif op ==2:
-            edit_proyecto()
+            if datos['is_admin'] == 1:
+                edit_proyecto()
+            else:
+                printer(tipo=1,argumento="Usted no está registrado como administrador.\nNo se ha podido realizar la operación.")
         elif op==3:
             print_proyecto()
         elif op==4:
             print_proyectos()
         elif op==5:
-            delete_proyecto()
+            if datos['is_admin'] == 1:
+                delete_proyecto()
+            else:
+                printer(tipo=1,argumento="Usted no está registrado como administrador.\nNo se ha podido realizar la operación.")
         #elif op==9:
         #    crear_tabla()

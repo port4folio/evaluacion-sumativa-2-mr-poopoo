@@ -52,12 +52,12 @@ def buscar_empleado(nombre):
             cursor=conn.cursor()
             # Select Tabla Empleados
             cursor.execute(
-                "SELECT id_empleado,nombres, paterno, materno, telefono, correo,direccion, comuna, fecha_inicio,sueldo FROM empleado WHERE nombre=%s",
-                (nombre,)
+                "SELECT id_empleado, nombres, paterno, materno, telefono, correo,direccion, comuna, fecha_inicio,sueldo FROM empleado WHERE nombres=%(nombre)s",
+                {'nombre': nombre}
                 )
             empleado=cursor.fetchone()
-            if empleado is not None:
-                empleado_encontrado=Empleado(empleado[1],empleado[2],empleado[3],empleado[4],empleado[5],empleado[6])
+            if empleado != None:
+                empleado_encontrado=Empleado(empleado[1],empleado[2],empleado[3],empleado[4],empleado[5],empleado[6],empleado[7],empleado[8],empleado[9])
                 empleado_encontrado.set_id(empleado[0])
             else:
                 empleado_encontrado=None
@@ -101,7 +101,7 @@ def obtener_empleados():
             empleados_lista = []
             if len(empleados_encontrados) > 0:
                 for empleado in empleados_encontrados:
-                    empleado_encontrado=Empleado(empleado[1],empleado[2],empleado[3],empleado[4],empleado[5],empleado[6])
+                    empleado_encontrado=Empleado(empleado[1],empleado[2],empleado[3],empleado[4],empleado[5],empleado[6],empleado[7],empleado[8],empleado[9])
                     empleado_encontrado.set_id(empleado[0])
                     empleados_lista.append(empleado_encontrado)
                 return empleados_lista
@@ -121,7 +121,7 @@ def eliminar_empleado(nombre):
     try:
         if conn is not None:
             cursor=conn.cursor()
-            cursor.execute("DELETE FROM empleado WHERE nombre = %s",(nombre))
+            cursor.execute("DELETE FROM empleado WHERE nombres = %s",{nombre})
             conn.commit()
             #print("Empleado eliminado")
             printer(tipo=0, argumento="Empleado eliminado correctamente.")

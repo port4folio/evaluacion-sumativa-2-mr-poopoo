@@ -5,8 +5,8 @@ from vistas.vista_proyecto import main_proyecto
 #from vistas.vista_registro_tiempo import main_registro_tiempo
 from controlador.controlador_usuario import *
 from modelo.printer import printer, clean
+
 def Login():
-    controlador_usuario = Registro()
 
     while True:
         #print("1.Registro")
@@ -15,50 +15,53 @@ def Login():
         printer([
             ["1. Registro", None, clean()],
             ["2. Inicio de sesión", None, None],
-            ["3. Salir", None, None]
+            ["3. Mostrar usuarios", None, None],
+            ["0. Salir", None, None]
         ])
         try:
             opcion = int(input("Seleccione una opción: "))
 
             if opcion == 1:
                 printer()
+                nombre = input("Ingrese su nombre de usuario: ")
                 correo = input("Ingrese su correo: ")
                 contrasena = input("Ingrese su contraseña: ")
-                if controlador_usuario.crear_usuario(correo, contrasena):
+                if crear_usuario(nombre, correo, contrasena):
                         #print("BIENVENIDO!")
                         #print("Redirigiendo a INICIO DE SESIÓN...")
                         printer(tipo=0, argumento="Registro completado.\nUsted será redireccionado al inicio de sesión.")
                         continue
-
             elif opcion == 2:
-                    printer([
-                        ["-- Menú Inicio de Sesión --", None, clean()]
-                    ])
-                    correo = input("Ingrese su correo: ")
-                    contrasena = input("Ingrese su contraseña: ")
+                printer([
+                    ["-- Menú Inicio de Sesión --", None, clean()]
+                ])
+                correo = input("Ingrese su correo: ")
+                contrasena = input("Ingrese su contraseña: ")
 
-                    if controlador_usuario.autentificar_usuario (correo, contrasena):
-                        #print("BIENVENIDO!, autentificacion exitosa")
-                        printer(tipo=0, argumento="Autentificación correcta.")
-                        break
+                auth = autentificar_usuario(correo, contrasena)
+                if auth > 0:
+                    #print("BIENVENIDO!, autentificacion exitosa")
+                    #printer(tipo=0, argumento="Autentificación correcta.")
+                    if auth == 2:
+                        admin = 1
                     else:
-                        #print("credenciales incorrectas, intente nuevamente")
-                        #TODO Meter un número de intentos para el login, evita bruteforce y hace cooldown
-                        printer(tipo=1,argumento="Credenciales incorrectas.\nIntente nuevamente, por favor.")
-
-
+                        admin = 0
+                    return {'correo': correo, 'is_admin': admin}
+                    #print("credenciales incorrectas, intente nuevamente")
+                    #TODO Meter un número de intentos para el login, evita bruteforce y hace cooldown
+                        #printer(tipo=1,argumento="Credenciales incorrectas.\nIntente nuevamente, por favor.")
             elif opcion == 3:
-                    #print("saliendo del programa. !hasta luego!")
-                    printer(tipo=0,argumento="Saliendo del programa, hasta luego!")
-                    exit()
+                mostrar_informacion()
+            elif opcion == 0:
+                #print("saliendo del programa. !hasta luego!")
+                printer(tipo=0,argumento="Saliendo del programa, hasta luego!")
+                exit()
             else:
                 #print("Opción no válida, intente nuevamente.")
                 printer(tipo=1,argumento="Opción no válida, intente nuevamente.")
         except ValueError:
             #print("Error: Debe ingresar un número para seleccionar una opción.")
             printer(tipo=2,argumento="Debe de ingresar un número para la selección correcta.")
-
-Login()
 
 def menu_principal():
     #print("Informe principal")
@@ -81,21 +84,23 @@ def menu_principal():
     return op
 
 while True:
-    op=menu_principal()
-    if op==1:
-        main_empleado()
-    elif op==2:
-        main_proyecto()
-    elif op==3:
-        printer(tipo=1)
-        # main_departamento()
-    elif op==4:
-        printer(tipo=1)
-        # main_registro_tiempo()
-    elif op==0:
-        #print("Gracias")
-        printer(tipo=0,argumento="Gracias!")
-        break
-    else:
-        #print("Debe seleccionar una opción válida")
-        printer(tipo=2,argumento="Debe seleccionar una opción válida.")
+    datos = Login()
+    while True:
+        op=menu_principal()
+        if op==1:
+            main_empleado(datos)
+        elif op==2:
+            main_proyecto(datos)
+        elif op==3:
+            printer(tipo=1)
+            # main_departamento()
+        elif op==4:
+            printer(tipo=1)
+            # main_registro_tiempo()
+        elif op==0:
+            #print("Gracias")
+            printer(tipo=0,argumento="Gracias!")
+            break
+        else:
+            #print("Debe seleccionar una opción válida")
+            printer(tipo=2,argumento="Debe seleccionar una opción válida.")

@@ -3,6 +3,7 @@
 # Para crear un archivo con el listado de librerías de mi proyecto
 # pip freeze > requeriments.txt
 
+#TODO crear una database en pythonanywhere y usar todo ahí para no instalar XAMPP en todo dispositivo
 from modelo.printer import printer
 
 import mysql.connector

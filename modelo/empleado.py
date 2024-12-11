@@ -1,17 +1,17 @@
 from datetime import datetime
 
 class Empleado:
-    def __init__(self, nombres, paterno, materno, telefono, correo, direccion, comuna, fecha_inicio , sueldo):
+    def __init__(self, nombres, paterno, materno, telefono, correo, direccion, comuna, fecha_inicio, sueldo):
         self.__id=0
         self.__nombres= nombres
         self.__paterno= paterno
         self.__materno= materno
         self.__telefono=telefono
         self.__correo=correo
-        self.__direccion= direccion
-        self.__comuna= comuna
+        self.__direccion=direccion
+        self.__comuna=comuna
         self.__id_departamento=0
-        self.__fecha_inicio= fecha_inicio
+        self.__fecha_inicio=fecha_inicio
         self.__sueldo=sueldo
         self.__proyecto=[]
 

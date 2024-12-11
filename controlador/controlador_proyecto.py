@@ -9,10 +9,7 @@ def agregar_proyecto(proyecto = Proyecto):
             cursor = conn.cursor()  
             # Insert Tabla Proyecto
             cursor.execute(
-                "INSERT INTO proyecto (nombre_proyecto,descripcion_proyecto,fecha_inicio) VALUES (%s, %s, %s)", (
-                    proyecto.get_nombre_proyecto(), proyecto.get_descripcion_proyecto(), proyecto.get_fecha_inicio()
-                )
-            )
+                "INSERT INTO proyecto (nombre_proyecto,descripcion_proyecto,fecha_inicio) VALUES (%s, %s, %s)", (proyecto.get_nombre_proyecto(), proyecto.get_descripcion_proyecto(), proyecto.get_fecha_inicio()))
             conn.commit()
             #print("Proyecto ingresado")
             printer(tipo=0,argumento="Proyecto ingresado correctamente.")
@@ -31,8 +28,7 @@ def actualizar_proyecto(proyecto = Proyecto):
         if conn is not None:
             cursor=conn.cursor()
             # Update Tabla Proyecto
-            cursor.execute("UPDATE proyecto SET nombre_proyecto=%s,descripcion_proyecto=%s,fecha_inicio=%s WHERE id_proyecto=%s",
-                        (proyecto.get_nombre_proyecto(),proyecto.get_descripcion_proyecto(),proyecto.get_fecha_inicio(), proyecto.get_id()))
+            cursor.execute("UPDATE proyecto SET nombre_proyecto=%s,descripcion_proyecto=%s,fecha_inicio=%s WHERE id_proyecto=%s", (proyecto.get_nombre_proyecto(),proyecto.get_descripcion_proyecto(),proyecto.get_fecha_inicio(), proyecto.get_id()))
             conn.commit()
             #print("Proyecto actualizado")
             printer(tipo=0,argumento="Proyecto actualizado.")
@@ -50,8 +46,8 @@ def buscar_proyecto(nombre):
             cursor=conn.cursor()
             # Select Tabla proyecto
             cursor.execute(
-                "SELECT id_proyecto,nombre_proyecto,descripcion_proyecto,fecha_inicio FROM proyecto WHERE nombre_proyecto=%s",
-                (nombre)
+                "SELECT id_proyecto,nombre_proyecto,descripcion_proyecto,fecha_inicio FROM proyecto WHERE nombre_proyecto=%(nombre)s",
+                {'nombre': nombre}
                 )
             proyecto=cursor.fetchone()
             if proyecto is not None:
