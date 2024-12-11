@@ -64,6 +64,34 @@ def buscar_proyecto(nombre):
     finally:
         cursor.close()
         conn.close()
+        
+def buscar_proyecto_id(id_proyecto):
+    conn=conectar()
+    try:
+        if conn is not None:
+            cursor=conn.cursor()
+            # Select Tabla proyecto
+            cursor.execute(
+                "SELECT id_proyecto,nombre_proyecto,descripcion_proyecto,fecha_inicio FROM proyecto WHERE nombre_proyecto=%(id_proyecto)s",
+                {'id_proyecto': id_proyecto}
+                )
+            proyecto=cursor.fetchone()
+            if proyecto is not None:
+                proyecto_encontrado=Proyecto(proyecto[1],proyecto[2],proyecto[3])
+                proyecto_encontrado.set_id(proyecto[0])
+            else:
+                proyecto_encontrado=None
+            return proyecto_encontrado
+        else:
+            return None
+    except Exception as e:
+        #print(f"Error al conectar. {e}")
+        printer(tipo=2,argumento="No se ha podido obtener el proyecto. Código de error:\n" + str(e))
+    finally:
+        cursor.close()
+        conn.close()
+
+
 
 def obtener_proyectos():
     conn=conectar()
