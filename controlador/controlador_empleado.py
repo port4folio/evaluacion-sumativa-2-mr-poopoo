@@ -58,8 +58,18 @@ def buscar_empleado(nombre):
                 )
             empleado=cursor.fetchone()
             if empleado != None:
-                empleado_encontrado=Empleado(empleado[1],empleado[2],empleado[3],empleado[4],empleado[5],empleado[6],empleado[7],empleado[8],empleado[9])
-                empleado_encontrado.setId(empleado[0])
+                empleado_encontrado=Empleado(
+                    empleado[1],
+                    empleado[2],
+                    empleado[3],
+                    empleado[4],
+                    empleado[5],
+                    empleado[6],
+                    empleado[7],
+                    empleado[8],
+                    empleado[9]
+                )
+                empleado_encontrado.set_id(empleado[0])
             else:
                 empleado_encontrado=None
             return empleado_encontrado
