@@ -1,5 +1,5 @@
 class Proyecto:
-    def __init__(self, nombre_proyecto,descripcion_proyecto,fecha_inicio):
+    def __init__(self,nombre_proyecto,descripcion_proyecto,fecha_inicio):
         self.__id=0
         self.__nombre_proyecto=nombre_proyecto
         self.__descripcion_proyecto=descripcion_proyecto
@@ -38,4 +38,4 @@ class Proyecto:
     
 
     def __str__(self):
-        return f"Nombre: {self.__nombre}\nDescripcion del proyecto {self.__descripcion_proyecto}\nFecha de inicio {self.__fecha_inicio}"
+        return f"Nombre: {self.__nombre_proyecto}\nDescripcion del proyecto {self.__descripcion_proyecto}\nFecha de inicio {self.__fecha_inicio}\n"

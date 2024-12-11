@@ -1,18 +1,17 @@
 from datetime import datetime
-from .usuario import Usuario
-class Empleado(Usuario):
-    def __init__(self, id, contraseña, nombres, paterno, materno, telefono, correo, direccion, comuna, fecha_inicio , sueldo):
-        super().__init__(id, correo, contraseña)
-        self.__id=id
+
+class Empleado:
+    def __init__(self, nombres, paterno, materno, telefono, correo, direccion, comuna, fecha_inicio, sueldo):
+        self.__id=0
         self.__nombres= nombres
         self.__paterno= paterno
         self.__materno= materno
         self.__telefono=telefono
         self.__correo=correo
-        self.__direccion= direccion
-        self.__comuna= comuna
+        self.__direccion=direccion
+        self.__comuna=comuna
         self.__id_departamento=0
-        self.__fecha_inicio= fecha_inicio
+        self.__fecha_inicio=fecha_inicio
         self.__sueldo=sueldo
         self.__proyecto=[]
 
@@ -95,4 +94,4 @@ class Empleado(Usuario):
 
 
     def __str__(self):
-        return f"{super().__str__()}\nNombres: {self.__nombres}\nPaterno: {self.__paterno}\nMaterno: {self.__materno}\nTelefono{self.__telefono}\nCorreo {self.__correo}\nDireccion: {self.__direccion}\nComuna: {self.__comuna}\nFecha de incio: {self.__fecha_inicio}\nSueldo {self.__sueldo}"
+        return f"Nombres: {self.__nombres}\nPaterno: {self.__paterno}\nMaterno: {self.__materno}\nTelefono{self.__telefono}\nCorreo {self.__correo}\nDireccion: {self.__direccion}\nComuna: {self.__comuna}\nFecha de incio: {self.__fecha_inicio}\nSueldo {self.__sueldo}\n"

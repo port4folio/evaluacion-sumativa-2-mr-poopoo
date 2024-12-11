@@ -1,7 +1,9 @@
 from modelo.db import conectar
 from modelo.registro_tiempo import Registro_tiempo
+from modelo.printer import printer
 
-def agregar_entrada(Registro_tiempo):
+def agregar_entrada(registro_tiempo = Registro_tiempo):
+    printer()
     conn = conectar()
     cursor = None
     try:
@@ -10,22 +12,24 @@ def agregar_entrada(Registro_tiempo):
             # Insert Tabla Registro_tiempo
             cursor.execute(
                 "INSERT INTO registro_tiempo (fecha,id_empleado,id_proyecto,hra_entrada,descripcion_tareas) VALUES (%s, %s, %s, %s, %s)", (
-                    Registro_tiempo.getFecha(), Registro_tiempo.getId_empleado(), Registro_tiempo.getId_proyecto(), Registro_tiempo.getHra_entrada(),Registro_tiempo.getDescripcion_tareas()
+                    registro_tiempo.get_fecha(), registro_tiempo.get_id_empleado(), registro_tiempo.get_id_proyecto(), registro_tiempo.get_hra_entrada(),Registro_tiempo.get_descripcion_tareas()
                 )
             )
             conn.commit()
-            print("Entrada ingresada")
+            #print("Entrada ingresada")
+            printer(tipo=0,argumento="Entrada ingresada correctamente.")
+            #TODO continuar reemplazando prints
     except Exception as e:
-        print(f"No se agregaron registros {e}")
+        #print(f"No se agregaron registros {e}")
+        printer(tipo=2,argumento="No se agregaron registros. Código de error: " + str(e))
     finally:
-
         if cursor:
             cursor.close()
-        
         if conn:
             conn.close()
             
-def agregar_salida(Registro_tiempo):
+def agregar_salida(registro_tiempo=Registro_tiempo):
+    printer()
     conn = conectar()
     cursor = None
     try:
@@ -34,17 +38,17 @@ def agregar_salida(Registro_tiempo):
             # Insert Tabla Registro_tiempo
             cursor.execute(
                 "INSERT INTO registro_tiempo (hra_salida,hrs_trabajadas) VALUES (%s, %s)", (
-                    Registro_tiempo.getHra_salida(),Registro_tiempo.getHrs_trabajadas()
+                    registro_tiempo.get_hra_salida(),registro_tiempo.get_hrs_trabajadas()
                 )
             )
             conn.commit()
-            print("Salida ingresada")
+            #print("Salida ingresada")
+            printer(tipo=0,argumento="Salida ingresada correctamente.")
     except Exception as e:
-        print(f"No se agregaron registros {e}")
+        #print(f"No se agregaron registros {e}")
+        printer(tipo=2,argumento="No se agregaron registros. Código de error: " + str(e))
     finally:
-
         if cursor:
             cursor.close()
-        
         if conn:
             conn.close()

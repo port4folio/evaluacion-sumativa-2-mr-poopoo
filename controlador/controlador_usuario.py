@@ -1,26 +1,110 @@
-from modelo.usuario import Usuario
+#from modelo.usuario import Usuario
 from modelo.db import conectar
-import bcrypt
+from seguridad.CaDe_Main import GetJson
+from modelo.printer import printer
+from email_validator import validate_email, EmailNotValidError
+from seguridad.check_contraseña import Validar
 
-class Registro:
+def mostrar_informacion(print_info = True):
+    #print(f"id: {id}")
+    #print(f"correo: {correo}")
+    #print(f"contrasena: {contraseña}")
+    conn = None
+    cursor = None
+    try:
+        conn = conectar()
+        cursor = conn.cursor()
+        cursor.execute("SELECT nombre, is_admin FROM usuarios")
+        usuarios = cursor.fetchall()
+        if len(usuarios) > 0:
+            cuentas = 0
+            printer()
+            printer([
+                ["-- Usuarios registrados --", None, None]
+            ])
+            for usuario in usuarios:
+                cuentas += 1
+                nombre = usuario[0]
+                is_admin = usuario[1]
+                es_administrador = ""
+                match(is_admin):
+                    case 0:
+                        es_administrador = "No."
+                    case 1:
+                        es_administrador = "Sí."
+                    case _:
+                        es_administrador = "No (?)"
+                printer([
+                    ["----------------", None, None],
+                    ["Nombre: " + nombre, None, None],
+                    ["Es administrador?: " + es_administrador, None, None],
+                    ["", None, None]
+                ])
+            printer([
+                ["Presione ENTER para continuar...", None, None]
+            ])
+            if print_info:
+                input()
+            return cuentas
+        else:
+            if print_info:
+                printer(tipo=1,argumento="No se han encontrado usuarios registrados.")
+            return 0
+    except Exception as e:
+        if print_info:
+            printer(tipo=2,argumento="No se han podido obtener registros. Código de error: " + str(e))
+        return None
+    finally:
+        if cursor:
+            cursor.close()
+        if conn:
+            conn.close()
 
-    def __init__(self):
-        print("Se ha iniciado el controlador de usuarios correctamente")
-        
-
-    def mostrar_informacion(self, id, correo, contraseña):
-        print(f"id: {id}")
-        print(f"correo: {correo}")
-        print(f"contraseña: {contraseña}")
-
-    def crear_usuario(self, correo, contraseña):
-        conn = None
-        cursor = None
-        try:
-            # Validación básica, se puede usar cuando no se ingresan datos.
-            if not correo or not contraseña:
-                print("El correo y la contraseña son obligatorios, por favor ingresarlos a continuacion:")
-                return False
+def get_admin(correo, print_info = False):
+    conn = None
+    cursor = None
+    try:
+        conn = conectar()
+        cursor = conn.cursor()
+        cursor.execute("SELECT is_admin FROM usuarios WHERE correo = %(correo)s", {'correo': correo})
+        resultado = cursor.fetchone()
+        if resultado is None:
+            if print_info:
+                printer(tipo=1,argumento="El usuario no es un administrador o no ha sido encontrado.")
+            return False
+        is_admin = resultado[0]
+        if is_admin == 1:
+            #el usuario si es admin
+            return True
+        else:
+            if print_info:
+                printer(tipo=1,argumento="El usuario no es un administrador.\nNo hay permisos para realizar esta acción.")
+            return False
+    except Exception as e:
+        if print_info:
+            printer(tipo=2,argumento="Error al consultar usuario. Código de error: \n" + str(e))
+        return False
+    finally:
+        if cursor:
+            cursor.close()
+        if conn:
+            conn.close()
+    
+def crear_usuario(nombre, correo, contraseña):
+    conn = None
+    cursor = None
+    try:
+        # Validación básica de entrada, se puede usar cuando no se ingresan datos.
+        #print("El correo y la contraseña son obligatorios, por favor ingresarlos a continuacion:")
+        if not nombre:
+            printer(tipo=2,argumento="El nombre de usuario es obligatorio.")
+            return False
+        if not correo:
+            printer(tipo=2,argumento="El correo es obligatorio.")
+            return False
+        if not contraseña:
+            printer(tipo=2,argumento="La contraseña es obligatoria.")
+            return False
 
             # Generar hash de la contraseña
             salt = bcrypt.gensalt()
@@ -32,54 +116,82 @@ class Registro:
             query = "INSERT INTO usuarios (correo, contraseña) VALUES (%s, %s)"
             cursor.execute(query, (correo, hash_contraseña.decode("utf-8")))
             conn.commit()
-
-            print(f"Usuario con correo {correo} creado exitosamente.")
-            return True
-        #Exception clase base en Python que captura cualquier error no específico , ejemplo errores de conexión,sintaxis incorrecta,etc
-        #La variable e almacena la información detallada del error que ocurrió
-        except Exception as e:
-            print(f"Error al crear usuario: {e}")
-            return False
-        finally:
-            if cursor:
-                cursor.close()
-            if conn:
-                conn.close()
-
-
-    def autentificar_usuario(self, correo, contraseña):
-        conn = None
-        cursor = None
         try:
-            conn = conectar()
-            cursor = conn.cursor()
-            query = "SELECT contraseña FROM usuarios WHERE correo = %s"
-            cursor.execute(query, (correo,))  #se reemplaza el %s por el correo del usuario que se pasó a la función.
-            resultado = cursor.fetchone()
-
-            if resultado is None:
-                print("Usuario no encontrado.")
-                return False  # usuario no encontrado
-
-            # recuperar la pass desde la base de datos
-            contraseña_hash = resultado[0]
-
-            # isinstance es una funcion que permite saber si una variable pertenece a un tipo determinado, se compara el hash recuperado que si es de tipo bytes, se convierte a texto para poder compararlo bien.
-            if isinstance(contraseña_hash, bytes):                
-                contraseña_hash = contraseña_hash.decode("utf-8")
-
-            # aqui se verifica la igualdad de contraseña ingresada y con la de bd
-            if bcrypt.checkpw(contraseña.encode("utf-8"), contraseña_hash.encode("utf-8")):
-                print("Autenticación exitosa.")
-                return True
-            else:
-                print("Contraseña incorrecta.")
-                return False
-        except Exception as e:
-            print(f"Error al autenticar usuario: {e}")
+            validate_email(correo,check_deliverability=True)
+        except EmailNotValidError as e:
+            printer(tipo=2,argumento="El correo no es válido. Código de error: " + str(e))
             return False
-        finally:
-            if cursor:
-                cursor.close()
-            if conn:
-                conn.close()
+        #checkear que la contraseña sea correcta
+        if (Validar(contraseña) == False):
+            printer(tipo=2,argumento="La contraseña no es válida. Debe contener al menos:\n8 caracteres, 1 mayúscula, 1 número y 1 símbolo especial (?, !, $)")
+            return False
+        # Generar hash de la contraseña
+        hash_contraseña = GetJson(contraseña)
+        print(hash_contraseña)
+        #conectar
+        #si no hay usuarios, hacer el primer usuario un administrador.
+        admin = 0
+        cuentas = mostrar_informacion(print_info=False)
+        if cuentas != None:
+            if cuentas == 0:
+                admin = 1
+            else:
+                admin = 0
+        else:
+            admin = 0
+        conn = conectar()
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO usuarios (is_admin, nombre, correo, contrasena) VALUES (%(is_admin)s, %(nombre)s, %(correo)s, %(contrasena)s)", {'is_admin': admin, 'nombre': nombre, 'correo': correo, 'contrasena': hash_contraseña})
+        conn.commit()
+
+        #print(f"Usuario con correo {correo} creado exitosamente.")
+        printer(tipo=0,argumento="Usuario con correo " + str(correo) + " creado exitosamente.")
+        if admin == 1:
+            printer(tipo=1,argumento="Usted ha sido registrado como administrador.\nInicie sesión con su correo y contraseña para administrar la BD.")
+        return True
+    #Exception es una clase base en Python que captura cualquier error no específico por ejemplo errores de conexión,sintaxis incorrecta,etc
+    #La variable e almacena la información detallada del error que ocurrió
+    except Exception as e:
+        #print(f"Error al crear usuario: {e}")
+        printer(tipo=2,argumento="Error al crear usuario. Código de error: \n" + str(e))
+        return False
+    finally:
+        if cursor:
+            cursor.close()
+        if conn:
+            conn.close()
+
+def autentificar_usuario(correo, contraseña):
+    conn = None
+    cursor = None
+    try:
+        conn = conectar()
+        cursor = conn.cursor()
+        cursor.execute("SELECT contrasena FROM usuarios WHERE correo = %(correo)s", {'correo': correo})
+        resultado = cursor.fetchone()
+        if resultado is None:
+            #print("Usuario no encontrado.")
+            printer(tipo=1, argumento="Usuario no encontrado.")
+            return -1 # usuario no encontrado
+
+        contraseña_hash = resultado[0]
+        if (GetJson(contraseña) == contraseña_hash):
+            #print("Autenticación exitosa.")
+            printer(tipo=0,argumento="Autenticación exitosa.")
+            if get_admin(correo):
+                printer(tipo=1, argumento="Usted ha iniciado sesión como administrador.\nTenga cuidado con las acciones destructivas.")
+                return 2 # es admin
+            return 1 # es usuario normal
+        else:
+            #print("Contraseña incorrecta.")
+            printer(tipo=1,argumento="Contraseña incorrecta.")
+            return -2 # contraseña incorrecta
+    except Exception as e:
+        #print(f"Error al autenticar usuario: {e}")
+        printer(tipo=2,argumento="Error al autenticar usuario. Código de error: \n" + str(e))
+        return 0 # error interno
+    finally:
+        if cursor:
+            cursor.close()
+        if conn:
+            conn.close()

@@ -1,0 +1,8 @@
+*.cpython-311.pyc
+*.cpython-313.pyc
+*.DS_store
+dist/
+.venv/
+build/
+*.spec
+.VSCodeCounter/
