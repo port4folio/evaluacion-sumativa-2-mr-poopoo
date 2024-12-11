@@ -60,33 +60,45 @@ def check_in():
     if empleado != None:
         entrada = tiempo_ahora()
         date = f"{tiempo_desc(entrada,2)}/{tiempo_desc(entrada,1)}/{tiempo_desc(entrada,0)}"
-        hour = f"{tiempo_desc(entrada,3)}:{tiempo_desc(entrada,4)}"
+        hour = f"{tiempo_desc(entrada,3)}:{tiempo_desc(entrada,4)}:00"
         #print(f"Se registró su entrada de fecha {date} a las {hour} horas.")
         registro_tiempo = Registro_tiempo(empleado.get_id(),proyecto.get_id(),date,hour,"","","")
         return registro_tiempo
     else:
-        print("ID no registrado, vuelva a intentarlo.")
+        #print("ID no registrado, vuelva a intentarlo.")
+        printer(tipo=2,argumento="Usted no está registrado. Vuelva a intentarlo.")
         return None
     
 def calcular_horas_trabajadas(registro_tiempo = Registro_tiempo):
     salida = registro_tiempo.get_hra_salida()
-    if entrada:
-        diferencia = 
-        horas_trabajadas = diferencia.total_seconds() / 3600
-        Registro_tiempo.set_hrs_trabajadas(horas_trabajadas)
+    entrada = registro_tiempo.get_hra_entrada()
+    if entrada != None:
+        salida_split = str(salida).split(":")
+        entrada_split = str(entrada).split(":")
+        diferencia = int(salida_split[0]) - int(entrada_split[0])
+        horas_trabajadas = diferencia
+        return horas_trabajadas
 
-def check_out(registro_tiempo):
-    id_registrandose=int(input("Ingrese su ID: "))
-    if id_registrandose == empleado.get_id():
-        salida = datetime.now()
-        dia = salida.day
-
-        hour = salida.strftime('%H:%M')
-        print(f"Se registró su salida de fecha {date} a las {hour} horas.")
-        calcular_horas_trabajadas(salida)
-        Registro_tiempo.set_hra_salida(hour)
+def check_out(registro_tiempo = Registro_tiempo):
+    empleado_registrandose=input("Ingrese su correo: ")
+    empleado = buscar_empleado(empleado_registrandose)
+    if empleado != None:
+        salida = tiempo_ahora()
+        date = f"{tiempo_desc(salida,2)}/{tiempo_desc(salida,1)}/{tiempo_desc(salida,0)}"
+        hour = f"{tiempo_desc(salida,3)}:{tiempo_desc(salida,4)}:00"
+        #print(f"Se registró su salida de fecha {date} a las {hour} horas.")
+        printer([
+            ["Se ha registrado su salida. Fecha: " + date + ", Hora: " + hour, None, clean()],
+            ["Presiona ENTER para continuar...",None,None]
+        ])
+        horas = calcular_horas_trabajadas(salida)
+        registro_tiempo.setHrs_trabajadas(horas)
+        registro_tiempo.set_hra_salida(hour)
+        input()
+        return registro_tiempo
     else:
-        print("ID no registrado, vuelva a intentarlo.")
+        #print("ID no registrado, vuelva a intentarlo.")
+        printer(tipo=2,argumento="Usted no está registrado. Vuelva a intentarlo.")
         
 def main_registro_tiempo():
     op= -1

@@ -94,4 +94,4 @@ class Empleado:
 
 
     def __str__(self):
-        return f"Nombres: {self.__nombres}\nPaterno: {self.__paterno}\nMaterno: {self.__materno}\nTelefono{self.__telefono}\nCorreo {self.__correo}\nDireccion: {self.__direccion}\nComuna: {self.__comuna}\nFecha de incio: {self.__fecha_inicio}\nSueldo {self.__sueldo}\n"
+        return f"Nombres: {self.__nombres}\nPaterno: {self.__paterno}\nMaterno: {self.__materno}\nTelefono: {self.__telefono}\nCorreo: {self.__correo}\nDireccion: {self.__direccion}\nComuna: {self.__comuna}\nFecha de incio: {self.__fecha_inicio}\nSueldo: {self.__sueldo}\n"

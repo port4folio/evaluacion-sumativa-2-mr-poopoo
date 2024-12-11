@@ -50,7 +50,7 @@ def buscar_empleado(nombre):
     conn=conectar()
     try:
         if conn is not None:
-            cursor=conn.cursor()
+            cursor=conn.cursor(buffered=True)
             # Select Tabla Empleados
             cursor.execute(
                 "SELECT id_empleado, nombres, paterno, materno, telefono, correo,direccion, comuna, fecha_inicio,sueldo FROM empleado WHERE nombres=%(nombre)s",
@@ -69,7 +69,7 @@ def buscar_empleado(nombre):
                     empleado[8],
                     empleado[9]
                 )
-                empleado_encontrado.set_id(empleado[0])
+                empleado_encontrado.setId(empleado[0])
             else:
                 empleado_encontrado=None
             return empleado_encontrado

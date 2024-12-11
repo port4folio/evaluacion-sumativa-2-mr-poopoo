@@ -43,7 +43,7 @@ def buscar_proyecto(nombre):
     conn=conectar()
     try:
         if conn is not None:
-            cursor=conn.cursor()
+            cursor=conn.cursor(buffered=True)
             # Select Tabla proyecto
             cursor.execute(
                 "SELECT id_proyecto,nombre_proyecto,descripcion_proyecto,fecha_inicio FROM proyecto WHERE nombre_proyecto=%(nombre)s",

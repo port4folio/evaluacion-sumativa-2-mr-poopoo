@@ -2,6 +2,8 @@ from modelo.db import conectar
 from modelo.registro_tiempo import Registro_tiempo
 from modelo.printer import printer
 
+#def agregar_registro_tiempo()
+
 def agregar_entrada(registro_tiempo = Registro_tiempo):
     printer()
     conn = conectar()
@@ -12,7 +14,7 @@ def agregar_entrada(registro_tiempo = Registro_tiempo):
             # Insert Tabla Registro_tiempo
             cursor.execute(
                 "INSERT INTO registro_tiempo (fecha,id_empleado,id_proyecto,hra_entrada,descripcion_tareas) VALUES (%s, %s, %s, %s, %s)", (
-                    registro_tiempo.get_fecha(), registro_tiempo.get_id_empleado(), registro_tiempo.get_id_proyecto(), registro_tiempo.get_hra_entrada(),Registro_tiempo.get_descripcion_tareas()
+                    registro_tiempo.getFecha(), registro_tiempo.getId_empleado(), registro_tiempo.getId_proyecto(), registro_tiempo.get_hra_entrada(),registro_tiempo.getDescripcion_tareas()
                 )
             )
             conn.commit()
