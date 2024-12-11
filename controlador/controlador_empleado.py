@@ -46,7 +46,7 @@ def actualizar_empleado(empleado = Empleado):
         conn.close()
 
 
-def buscar_empleado(nombre):
+def buscar_empleado_nombre(nombre):
     conn=conectar()
     try:
         if conn is not None:
@@ -55,6 +55,80 @@ def buscar_empleado(nombre):
             cursor.execute(
                 "SELECT id_empleado, nombres, paterno, materno, telefono, correo,direccion, comuna, fecha_inicio,sueldo FROM empleado WHERE nombres=%(nombre)s",
                 {'nombre': nombre}
+                )
+            empleado=cursor.fetchone()
+            if empleado != None:
+                empleado_encontrado=Empleado(
+                    empleado[1],
+                    empleado[2],
+                    empleado[3],
+                    empleado[4],
+                    empleado[5],
+                    empleado[6],
+                    empleado[7],
+                    empleado[8],
+                    empleado[9]
+                )
+                empleado_encontrado.setId(empleado[0])
+            else:
+                empleado_encontrado=None
+            return empleado_encontrado
+        else:
+            return None
+    except Exception as e:
+        #print(f"Error al conectar. {e}")
+        printer(tipo=2,argumento="No se pudo obtener información. Código de error:\n" + str(e))
+    finally:
+        cursor.close()
+        conn.close()
+
+
+def buscar_empleado_id(id_empleado):
+    conn=conectar()
+    try:
+        if conn is not None:
+            cursor=conn.cursor(buffered=True)
+            # Select Tabla Empleados
+            cursor.execute(
+                "SELECT id_empleado, nombres, paterno, materno, telefono, correo,direccion, comuna, fecha_inicio,sueldo FROM empleado WHERE id_empleado=%(id_empleado)s",
+                {'id_empleado': id_empleado}
+                )
+            empleado=cursor.fetchone()
+            if empleado != None:
+                empleado_encontrado=Empleado(
+                    empleado[1],
+                    empleado[2],
+                    empleado[3],
+                    empleado[4],
+                    empleado[5],
+                    empleado[6],
+                    empleado[7],
+                    empleado[8],
+                    empleado[9]
+                )
+                empleado_encontrado.setId(empleado[0])
+            else:
+                empleado_encontrado=None
+            return empleado_encontrado
+        else:
+            return None
+    except Exception as e:
+        #print(f"Error al conectar. {e}")
+        printer(tipo=2,argumento="No se pudo obtener información. Código de error:\n" + str(e))
+    finally:
+        cursor.close()
+        conn.close()
+
+
+def buscar_empleado_correo(correo):
+    conn=conectar()
+    try:
+        if conn is not None:
+            cursor=conn.cursor(buffered=True)
+            # Select Tabla Empleados
+            cursor.execute(
+                "SELECT id_empleado, nombres, paterno, materno, telefono, correo,direccion, comuna, fecha_inicio,sueldo FROM empleado WHERE correo=%(correo)s",
+                {'correo': correo}
                 )
             empleado=cursor.fetchone()
             if empleado != None:
