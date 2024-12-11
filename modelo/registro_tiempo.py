@@ -8,8 +8,8 @@ class Registro_tiempo:
         self.__hrs_trabajadas=hrs_trabajadas
         self.__descripcion_tareas=descripcion_tareas
 
-    def get_empleado(self):
-        return self.__empleado
+    #def get_empleado(self):
+    #return self.__empleado ???
     
     def get_fecha(self):
         return self.__fecha
@@ -53,9 +53,7 @@ class Registro_tiempo:
     
     def set_descripcion_tareas(self,descripcion_tareas):
         self.__descripcion_tareas=descripcion_tareas
-    
-
 
     def __str__(self):
-        return f"{self.__empleado}trabajo desde las {self.__hra_entrada} con un total de {self.__horas_trabajadas}horas terminando a las {self.__hra_salida}, el dia {self.__fecha}en el proyecto {self.__id_proyecto}"
+        return f"Trabajo desde las {self.__hra_entrada} con un total de {self.__hrs_trabajadas}horas terminando a las {self.__hra_salida}, el dia {self.__fecha}en el proyecto N°{self.__id_proyecto}"
 

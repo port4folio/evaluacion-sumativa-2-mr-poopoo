@@ -2,6 +2,8 @@ from datetime import datetime
 from modelo.registro_tiempo import Registro_tiempo
 from modelo.empleado import Empleado    #aqui accedi a todos los atributos de los empelados para despues llamar el id
 from modelo.proyecto import Proyecto
+from controlador.controlador_empleado import buscar_empleado
+from modelo.printer import printer, clean
 
 # aqui instacié las clases para que puedan ser llamadas y que esten definidas en el chek o no me funcionaba
 empleado = Empleado#('id','contraseña','nombres', 'paterno', 'materno', 'telefono', 'correo', 'direccion', 'comuna', 'fecha_inicio', 'sueldo')
@@ -11,19 +13,27 @@ registro_tiempo=Registro_tiempo
 #from controlador.controlador_registro_tiempo import 
 
 def menu():
-    print("--------Menu Registro diario----------")
-    print("1. Entrada")
-    print("2. Salida")
-    print("0. Salir")
+    #print("--------Menu Registro diario----------")
+    #print("1. Entrada")
+    #print("2. Salida")
+    #print("0. Salir")
+    printer([
+        ["-- Menú Registro Diario --", None, clean()],
+        ["1. Entrada", None, None],
+        ["2. Salida", None, None],
+        ["0. Salir", None, None]
+    ])
     op=int(input("Ingrese una opcion: "))
     return op
 
 entrada = None
 
+#TODO terminar la logica del checkin
+
 def check_in():
-    id_registrandose=int(input("Ingrese su ID: "))
+    nombre_registrandose=input("Ingrese su nombre: ")
+    empleado = buscar_empleado(nombre_registrandose)
     if id_registrandose == empleado.get_id():
-        global entrada
         entrada = datetime.now()
         date = entrada.strftime('%d-%m-%Y')
         hour = entrada.strftime('%H:%M')

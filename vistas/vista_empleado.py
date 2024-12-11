@@ -24,7 +24,7 @@ def menu():
 
 def add_empleado():
     printer()
-    nombres=input("Ingrese nombre : ")
+    nombres=input("Ingrese nombre: ")
     paterno=input("Ingrese apellido paterno: ")
     materno=input("Ingrese apellido materno: ")
     telefono=input("Ingrese telefono: ")

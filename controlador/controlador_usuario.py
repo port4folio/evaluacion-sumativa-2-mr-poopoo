@@ -1,6 +1,6 @@
 #from modelo.usuario import Usuario
 from modelo.db import conectar
-from seguridad.CaDe_Main import CaDeMain
+from seguridad.CaDe_Main import GetJson
 from modelo.printer import printer
 from email_validator import validate_email, EmailNotValidError
 from seguridad.check_contraseña import Validar
@@ -37,8 +37,8 @@ class Registro:
                 printer(tipo=2,argumento="La contraseña no es válida. Debe contener al menos:\n8 caracteres, 1 mayúscula, 1 número y 1 símbolo especial (?, !, $)")
                 return False
             # Generar hash de la contraseña
-            hash_contraseña = CaDeMain(contraseña)
-
+            hash_contraseña = GetJson(contraseña)
+            print(hash_contraseña)
             #conectar
             conn = conectar()
             cursor = conn.cursor()
@@ -73,7 +73,7 @@ class Registro:
                 return False  # Usuario no encontrado
 
             contraseña_hash = resultado[0]
-            if (CaDeMain(contraseña) == contraseña_hash):
+            if (GetJson(contraseña) == contraseña_hash):
                 #print("Autenticación exitosa.")
                 printer(tipo=0,argumento="Autenticación exitosa.")
                 return True
