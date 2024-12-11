@@ -5,19 +5,19 @@ import bcrypt
 class Registro:
 
     def __init__(self):
-        print("se ha iniciado el controlador de usuarios correctamente")
-        pass
+        print("Se ha iniciado el controlador de usuarios correctamente")
+        
 
     def mostrar_informacion(self, id, correo, contraseña):
         print(f"id: {id}")
         print(f"correo: {correo}")
-        print(f"contrasena: {contraseña}")
+        print(f"contraseña: {contraseña}")
 
     def crear_usuario(self, correo, contraseña):
         conn = None
         cursor = None
         try:
-            # Validación básica de entrada, se puede usar cuando no se ingresan datos.
+            # Validación básica, se puede usar cuando no se ingresan datos.
             if not correo or not contraseña:
                 print("El correo y la contraseña son obligatorios, por favor ingresarlos a continuacion:")
                 return False
@@ -29,13 +29,13 @@ class Registro:
 
             conn = conectar()
             cursor = conn.cursor()
-            query = "INSERT INTO usuarios (correo, contrasena) VALUES (%s, %s)"
+            query = "INSERT INTO usuarios (correo, contraseña) VALUES (%s, %s)"
             cursor.execute(query, (correo, hash_contraseña.decode("utf-8")))
             conn.commit()
 
             print(f"Usuario con correo {correo} creado exitosamente.")
             return True
-        #Exception es una clase base en Python que captura cualquier error no específico por ejemplo errores de conexión,sintaxis incorrecta,etc
+        #Exception clase base en Python que captura cualquier error no específico , ejemplo errores de conexión,sintaxis incorrecta,etc
         #La variable e almacena la información detallada del error que ocurrió
         except Exception as e:
             print(f"Error al crear usuario: {e}")
@@ -45,6 +45,8 @@ class Registro:
                 cursor.close()
             if conn:
                 conn.close()
+
+
     def autentificar_usuario(self, correo, contraseña):
         conn = None
         cursor = None
@@ -52,13 +54,21 @@ class Registro:
             conn = conectar()
             cursor = conn.cursor()
             query = "SELECT contraseña FROM usuarios WHERE correo = %s"
-            cursor.execute(query, (correo,))
+            cursor.execute(query, (correo,))  #se reemplaza el %s por el correo del usuario que se pasó a la función.
             resultado = cursor.fetchone()
+
             if resultado is None:
                 print("Usuario no encontrado.")
-                return False  # Usuario no encontrado
+                return False  # usuario no encontrado
 
+            # recuperar la pass desde la base de datos
             contraseña_hash = resultado[0]
+
+            # isinstance es una funcion que permite saber si una variable pertenece a un tipo determinado, se compara el hash recuperado que si es de tipo bytes, se convierte a texto para poder compararlo bien.
+            if isinstance(contraseña_hash, bytes):                
+                contraseña_hash = contraseña_hash.decode("utf-8")
+
+            # aqui se verifica la igualdad de contraseña ingresada y con la de bd
             if bcrypt.checkpw(contraseña.encode("utf-8"), contraseña_hash.encode("utf-8")):
                 print("Autenticación exitosa.")
                 return True

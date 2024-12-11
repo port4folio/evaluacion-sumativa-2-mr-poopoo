@@ -1,14 +1,13 @@
 from modelo.empleado import Empleado
-from controlador.controlador_empleado import agregar_empleado, crear_tabla, buscar_empleado, actualizar_empleado, obtener_empleados, eliminar_empleado
-
+from controlador.controlador_empleado import agregar_empleado, buscar_empleado, editar_empleado, obtener_empleados, eliminar_empleado
+from datetime import datetime
 def menu():
-    print("Menu empleado")
+    print("----------------MENÚ EMPLEADO-----------------")
     print("1. Agregar")
     print("2. Editar")
     print("3. Imprimir uno")
     print("4. Imprimir todos")
     print("5. Eliminar")
-    print("6. Crear tabla")
     print("0. Salir")
     op=int(input("Ingrese una opcion: "))
     return op
@@ -34,7 +33,7 @@ def search_empleado():
 def edit_empleado():
     empleado=search_empleado()
     if empleado is not None:
-        print("Menu editar")
+        print("--------------MENÚ EDITAR---------------")
         print("1. Nombres")
         print("2. Paterno")
         print("3. Materno")
@@ -74,7 +73,7 @@ def edit_empleado():
             empleado.setComuna(comuna)
         else:
             print("No se realizaron cambios.")
-        actualizar_empleado(empleado)    
+        editar_empleado(empleado)    
     else:
         print("Empleado no encontrado")
     
@@ -103,6 +102,7 @@ def delete_empleado():
         resp=int(input("Seleccione una opcion: "))
         if resp==1:
             eliminar_empleado(empleado)
+            print("Empleado eliminado con éxito")
         else:
             print("Empleado no eliminado")
     else:
@@ -123,7 +123,6 @@ def main_empleado():
             print_empleados()
         elif op==5:
             delete_empleado()
-        elif op==9:
-            crear_tabla()
+    
 
 

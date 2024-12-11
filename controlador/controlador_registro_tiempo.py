@@ -10,7 +10,7 @@ def agregar_entrada(Registro_tiempo):
             # Insert Tabla Registro_tiempo
             cursor.execute(
                 "INSERT INTO registro_tiempo (fecha,id_empleado,id_proyecto,hra_entrada,descripcion_tareas) VALUES (%s, %s, %s, %s, %s)", (
-                    Registro_tiempo.get_fecha(), Registro_tiempo.get_id_empleado(), Registro_tiempo.get_id_proyecto(), Registro_tiempo.get_hra_entrada(),Registro_tiempo.get_descripcion_tareas()
+                    Registro_tiempo.getFecha(), Registro_tiempo.getId_empleado(), Registro_tiempo.getId_proyecto(), Registro_tiempo.getHra_entrada(),Registro_tiempo.getDescripcion_tareas()
                 )
             )
             conn.commit()
@@ -34,7 +34,7 @@ def agregar_salida(Registro_tiempo):
             # Insert Tabla Registro_tiempo
             cursor.execute(
                 "INSERT INTO registro_tiempo (hra_salida,hrs_trabajadas) VALUES (%s, %s)", (
-                    Registro_tiempo.get_hra_salida(),Registro_tiempo.get_hrs_trabajadas()
+                    Registro_tiempo.getHra_salida(),Registro_tiempo.getHrs_trabajadas()
                 )
             )
             conn.commit()

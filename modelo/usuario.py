@@ -1,26 +1,26 @@
 
 class Usuario:
     def __init__(self, id, correo, contraseña):
-        self.__id= id
-        self.__correo=correo
-        self.__contraseña=contraseña
+        self.id= id
+        self.correo=correo
+        self.contraseña=contraseña
     
-    def getId(self):
+    def get_id(self):
         return self.__id
 
-    def getCorreo(self):
+    def get_correo(self):
         return self.__correo    
     
-    def getContraseña(self):
+    def get_contraseña(self):
         return self.__contraseña
     
-    def setId(self,id):
+    def set_id(self,id):
         self.__id= id
     
-    def setCorreo(self,correo):
+    def set_correo(self,correo):
         self.__correo=correo
     
-    def setContraseña(self,contraseña):
+    def set_contraseña(self,contraseña):
         self.__contraseña=contraseña
 
 

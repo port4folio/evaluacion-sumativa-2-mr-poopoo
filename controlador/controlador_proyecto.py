@@ -1,6 +1,7 @@
 from modelo.db import conectar
 from modelo.proyecto import Proyecto
-def agregar_proeycto(proyecto):
+
+def agregar_proyecto(proyecto):
     conn = conectar()
     cursor = None
     try:
@@ -9,7 +10,7 @@ def agregar_proeycto(proyecto):
             # Insert Tabla Proyecto
             cursor.execute(
                 "INSERT INTO proyecto (nombre_proyecto,descripcion_proyecto,fecha_inicio) VALUES (%s, %s, %s)", (
-                    proyecto.get_nombre_proyecto(), proyecto.get_descripcion_proyecto(), proyecto.get_fecha_inicio()
+                    proyecto.getNombre_proyecto(), proyecto.getDescripcion_proyecto(), proyecto.getFecha_inicio()
                 )
             )
             conn.commit()
@@ -23,22 +24,6 @@ def agregar_proeycto(proyecto):
         
         if conn:
             conn.close()
-
-def actualizar_proyecto(proyecto):
-    conn=conectar()
-    try:
-        if conn is not None:
-            cursor=conn.cursor()
-            # Update Tabla Departamento
-            cursor.execute("UPDATE departamento SET nombre=%s,descripcion=%s,gerente=%s WHERE id=%s",
-                        (proyecto.get_nombre(),proyecto.get_descripcion(),proyecto.get_gerente(), proyecto.get_id()))
-            conn.commit()
-            print("Proyecto actualizado")
-    except Exception as e:
-        print(f"No se agregaron registros {e}")
-    finally:
-        cursor.close()
-        conn.close()
 
 def buscar_proyecto(nombre):
     conn=conectar()
@@ -85,6 +70,23 @@ def obtener_proyecto():
             return None
     except Exception as e:
         print(f"Error al conectar. {e}")
+    finally:
+        cursor.close()
+        conn.close()
+
+def editar_proyecto(proyecto):
+    conn=conectar()
+    try:
+        if conn is not None:
+            cursor=conn.cursor()
+            # Update Tabla Empleado
+            cursor.execute("UPDATE proyecto SET nombre_proyecto=%s, descripcion_proyecto=%s, fecha_inicio=%s",
+                        (proyecto.getNombre_proyecto(), proyecto.getDescripcion_proyecto(), proyecto.getFecha_inicio())
+            )
+            conn.commit()
+            print("Empleado actualizado")
+    except Exception as e:
+        print(f"No se agregaron registros {e}")
     finally:
         cursor.close()
         conn.close()

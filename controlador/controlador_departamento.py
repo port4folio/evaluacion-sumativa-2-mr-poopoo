@@ -9,7 +9,7 @@ def agregar_departamento(departamento):
             # Insert Tabla Departamento
             cursor.execute(
                 "INSERT INTO departamento (nombre,descripcion,gerente) VALUES (%s, %s, %s)", (
-                    departamento.get_nombre(), departamento.get_descripcion(), departamento.get_gerente()
+                    departamento.getNombre(), departamento.getDescripcion(), departamento.getGerente()
                 )
             )
             conn.commit()
@@ -31,7 +31,7 @@ def actualizar_departamento(departamento):
             cursor=conn.cursor()
             # Update Tabla Departamento
             cursor.execute("UPDATE departamento SET nombre=%s,descripcion=%s,gerente=%s WHERE id=%s",
-                        (departamento.get_nombre(),departamento.get_descripcion(),departamento.get_gerente(), departamento.get_id()))
+                        (departamento.getNombre(),departamento.getDescripcion(),departamento.getGerente(), departamento.getId()))
             conn.commit()
             print("Departamento actualizado")
     except Exception as e:

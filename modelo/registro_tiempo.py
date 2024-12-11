@@ -8,50 +8,50 @@ class Registro_tiempo:
         self.__hrs_trabajadas=hrs_trabajadas
         self.__descripcion_tareas=descripcion_tareas
 
-    def get_empleado(self):
+    def getEmpleado(self):
         return self.__empleado
     
-    def get_fecha(self):
+    def getFecha(self):
         return self.__fecha
     
-    def get_id_empleado(self):
+    def getId_empleado(self):
         return self.__id_empleado
     
-    def get_id_proyecto(self):
+    def getId_proyecto(self):
         return self.__id_proyecto
     
-    def get_hra_entrada(self):
+    def getHra_entrada(self):
         return self.__hra_entrada
     
-    def get_hra_salida(self):
+    def getHra_salida(self):
         return self.__hra_salida
     
-    def get_hrs_trabajadas(self):
+    def getHrs_trabajadas(self):
         return self.__hrs_trabajadas
     
-    def get_descripcion_tareas(self):
+    def getDescripcion_tareas(self):
         return self.__descripcion_tareas
     
 
-    def set_fecha(self,fecha):
+    def setFecha(self,fecha):
         self.__fecha=fecha
     
-    def set_id_empleado(self,id_empleado):
+    def setId_empleado(self,id_empleado):
         self.__id_empleado=id_empleado
     
-    def set_id_proyecto(self,id_proyecto):
+    def setId_proyecto(self,id_proyecto):
         self.__id_proyecto=id_proyecto
     
-    def set_hra_entrada(self,hra_entrada):
+    def setHra_entrada(self,hra_entrada):
         self.__hra_entrada=hra_entrada
     
-    def set_hra_salida(self,hra_salida):
+    def setHra_salida(self,hra_salida):
         self.__hra_salida=hra_salida
         
-    def set_hrs_trabajadas(self,hrs_trabajadas):
+    def setHrs_trabajadas(self,hrs_trabajadas):
         self.__hrs_trabajadas=hrs_trabajadas
     
-    def set_descripcion_tareas(self,descripcion_tareas):
+    def setDescripcion_tareas(self,descripcion_tareas):
         self.__descripcion_tareas=descripcion_tareas
     
 

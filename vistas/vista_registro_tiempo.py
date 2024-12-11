@@ -1,12 +1,17 @@
 from datetime import datetime
 from modelo.registro_tiempo import Registro_tiempo
-from modelo.empleado import get_id
-from modelo.proyecto import get_id
+from modelo.empleado import Empleado    #aqui accedi a todos los atributos de los empelados para despues llamar el id
+from modelo.proyecto import Proyecto
+
+# aqui instacié las clases para que puedan ser llamadas y que esten definidas en el chek o no me funcionaba
+empleado = Empleado('id','contraseña','nombres', 'paterno', 'materno', 'telefono', 'correo', 'direccion', 'comuna', 'fecha_inicio', 'sueldo')
+proyecto = Proyecto('nombre_proyecto', 'descripcion_proyecto', 'fecha_inicio')
+registro_tiempo=Registro_tiempo
 
 #from controlador.controlador_registro_tiempo import 
 
 def menu():
-    print("Menu Registro diario")
+    print("--------Menu Registro diario----------")
     print("1. Entrada")
     print("2. Salida")
     print("0. Salir")
