@@ -106,6 +106,16 @@ def crear_usuario(nombre, correo, contraseña):
             printer(tipo=2,argumento="La contraseña es obligatoria.")
             return False
 
+            # Generar hash de la contraseña
+            salt = bcrypt.gensalt()
+            hash_contraseña = bcrypt.hashpw(contraseña.encode("utf-8"), salt)
+
+
+            conn = conectar()
+            cursor = conn.cursor()
+            query = "INSERT INTO usuarios (correo, contraseña) VALUES (%s, %s)"
+            cursor.execute(query, (correo, hash_contraseña.decode("utf-8")))
+            conn.commit()
         try:
             validate_email(correo,check_deliverability=True)
         except EmailNotValidError as e:

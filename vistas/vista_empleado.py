@@ -162,6 +162,7 @@ def delete_empleado():
         resp=int(input("Seleccione una opción: "))
         if resp==1:
             eliminar_empleado(empleado)
+            print("Empleado eliminado con éxito")
         else:
             #print("Empleado no eliminado")
             printer(tipo=1,argumento="El empleado no ha sido eliminado.")

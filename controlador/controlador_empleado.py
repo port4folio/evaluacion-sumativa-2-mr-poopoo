@@ -11,7 +11,7 @@ def agregar_empleado(empleado = Empleado):
             cursor.execute(
                 "INSERT INTO empleado (nombres, paterno, materno, telefono, correo, direccion, comuna, fecha_inicio, sueldo) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
                 (empleado.getNombres(), empleado.getPaterno(), empleado.getMaterno(),empleado.getTelefono(), empleado.getCorreo(), empleado.getDireccion(), 
-                 empleado.getComuna(), empleado.get_fecha_inicio(), empleado.get_sueldo())
+                 empleado.getComuna(), empleado.getFecha_inicio(), empleado.getSueldo())
             )
             conn.commit()
             #print("Empleado ingresado")
@@ -29,7 +29,7 @@ def actualizar_empleado(empleado = Empleado):
     conn=conectar()
     try:
         if conn is not None:
-            cursor=conn.cursor()
+            cursor = conn.cursor()
             # Update Tabla Empleado
             cursor.execute("UPDATE empleado SET nombres=%s, paterno=%s, materno=%s, telefono=%s, correo=%s, direccion=%s, comuna=%s, fecha_inicio=%s, sueldo=%s WHERE id_empleado=%s",
                         (empleado.getNombres(), empleado.getPaterno(), empleado.getMaterno(),empleado.getTelefono(), empleado.getCorreo(), empleado.getDireccion(), 
@@ -44,6 +44,7 @@ def actualizar_empleado(empleado = Empleado):
     finally:
         cursor.close()
         conn.close()
+
 
 def buscar_empleado(nombre):
     conn=conectar()
@@ -81,25 +82,6 @@ def buscar_empleado(nombre):
         cursor.close()
         conn.close()
 
-def crear_tabla():#Función para crear las tablas en la base de datos
-  conn = conectar()
-  if conn is None:
-    return
-  cursor = conn.cursor()
-  cursor.execute('''
-  CREATE TABLE IF NOT EXISTS empleado (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  nombre VARCHAR(255) NOT NULL,
-  direccion VARCHAR(255) NOT NULL,
-  telefono VARCHAR(20) NOT NULL,
-  correo VARCHAR(255) NOT NULL,
-  fecha_inicio DATE NOT NULL,
-  sueldo FLOAT NOT NULL
-  )
-  ''')
-  conn.commit()
-  cursor.close()
-  conn.close() 
     
 def obtener_empleados():
     conn=conectar()

@@ -10,7 +10,7 @@ def agregar_departamento(departamento = Departamento):
             # Insert Tabla Departamento
             cursor.execute(
                 "INSERT INTO departamento (nombre,descripcion,gerente) VALUES (%s, %s, %s)", (
-                    departamento.get_nombre(), departamento.get_descripcion(), departamento.get_gerente()
+                    departamento.getNombre(), departamento.getDescripcion(), departamento.getGerente()
                 )
             )
             conn.commit()
@@ -30,7 +30,7 @@ def actualizar_departamento(departamento = Departamento):
     conn=conectar()
     try:
         if conn is not None:
-            cursor=conn.cursor()
+            cursor = conn.cursor()
             # Update Tabla Departamento
             cursor.execute("UPDATE departamento SET nombre=%s,descripcion=%s,gerente=%s WHERE id_departamento=%s",
                         (departamento.get_nombre(),departamento.get_descripcion(),departamento.get_gerente(), departamento.get_id_departamento()))
@@ -43,6 +43,7 @@ def actualizar_departamento(departamento = Departamento):
     finally:
         cursor.close()
         conn.close()
+
 
 def buscar_departamento(nombre):
     conn=conectar()

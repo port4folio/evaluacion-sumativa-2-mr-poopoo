@@ -1,34 +1,34 @@
 class Departamento:
-    def __init__(self, id_departamento,nombre,descripcion,gerente):
-        self.__id_departamento= id_departamento
+    def __init__(self,nombre,descripcion,gerente):
+        self.__id_departamento= None
         self.__nombre = nombre
         self.__descripcion=descripcion
         self.__gerente = gerente
         self.__empleados = []
 
-    def get_id_departamento(self):
+    def getId_departamento(self):
         return self.__id_departamento
     
-    def get_nombre(self):
+    def getNombre(self):
         return self.__nombre
     
-    def get_descripcion(self):
+    def getDescripcion(self):
         return self.__descripcion
 
-    def get_gerente(self):
+    def getGerente(self):
         return self.__gerente
     
-    def get_empleados(self):
+    def getEmpleados(self):
         return self.__empleados
 
 
-    def set_id_departamento(self,id_departamento):
+    def setId_departamento(self,id_departamento):
         self.__id_departamento=id_departamento
 
-    def set_nombre(self,nombre):
+    def setNombre(self,nombre):
         self.__nombre=nombre 
 
-    def set_gerente(self,gerente):
+    def setGerente(self,gerente):
         self.__gerente=gerente
 
 

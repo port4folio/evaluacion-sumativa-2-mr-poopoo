@@ -16,10 +16,10 @@ class Empleado:
         self.__proyecto=[]
 
     #getters
-    def get_id(self):
+    def getId(self):
         return self.__id
     
-    def get_id_departamento(self):
+    def getId_departamento(self):
         return self.__id_departamento
 
     def getNombres(self):
@@ -43,22 +43,22 @@ class Empleado:
     def getComuna(self):
         return self.__comuna
        
-    def get_fecha_inicio(self):
+    def getFecha_inicio(self):
         return self.__fecha_inicio
     
-    def get_sueldo(self):
+    def getSueldo(self):
         return self.__sueldo
     
     
-    def get_proyecto(self):
+    def getProyecto(self):
         return self.__proyecto
     
     ##seters
 
-    def set_id(self,id):
+    def setId(self,id):
         self.__id=id
     
-    def set_id_departamento(self,id_departamento):
+    def setId_departamento(self,id_departamento):
         self.__id_departamento=id_departamento
 
     def setNombres(self,nombres):
@@ -82,13 +82,13 @@ class Empleado:
     def setComuna(self,comuna):
         self.__comuna=comuna
     
-    def set_fecha_inicio(self,fecha_inicio):
+    def setFecha_inicio(self,fecha_inicio):
         self.__fecha_inicio=fecha_inicio
     
-    def set_sueldo(self,sueldo):
+    def setSueldo(self,sueldo):
         self.__sueldo=sueldo
 
-    def set_proyecto(self,proyecto):
+    def setProyecto(self,proyecto):
         self.__proyecto=proyecto
 
 

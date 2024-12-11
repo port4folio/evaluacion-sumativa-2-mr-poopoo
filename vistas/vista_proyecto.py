@@ -145,6 +145,7 @@ def delete_proyecto():
         resp=int(input("Seleccione una opcion: "))
         if resp==1:
             eliminar_proyecto(proyecto)
+            print("Se ha eliminado el proyecto con éxito")
         else:
             #print("proyecto no eliminado")
             printer(tipo=1,argumento="El proyecto no ha sido eliminado.")

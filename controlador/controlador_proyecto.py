@@ -6,7 +6,7 @@ def agregar_proyecto(proyecto = Proyecto):
     cursor = None
     try:
         if conn is not None:
-            cursor = conn.cursor()  
+            cursor = conn.cursor()
             # Insert Tabla Proyecto
             cursor.execute(
                 "INSERT INTO proyecto (nombre_proyecto,descripcion_proyecto,fecha_inicio) VALUES (%s, %s, %s)", (proyecto.get_nombre_proyecto(), proyecto.get_descripcion_proyecto(), proyecto.get_fecha_inicio()))
