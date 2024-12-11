@@ -3,12 +3,13 @@ from modelo.registro_tiempo import Registro_tiempo
 from modelo.empleado import Empleado    #aqui accedi a todos los atributos de los empelados para despues llamar el id
 from modelo.proyecto import Proyecto
 from controlador.controlador_empleado import buscar_empleado
+from controlador.controlador_proyecto import buscar_proyecto
 from modelo.printer import printer, clean
 
 # aqui instacié las clases para que puedan ser llamadas y que esten definidas en el chek o no me funcionaba
-empleado = Empleado#('id','contraseña','nombres', 'paterno', 'materno', 'telefono', 'correo', 'direccion', 'comuna', 'fecha_inicio', 'sueldo')
-proyecto = Proyecto#('nombre_proyecto', 'descripcion_proyecto', 'fecha_inicio')
-registro_tiempo=Registro_tiempo
+#empleado = Empleado#('id','contraseña','nombres', 'paterno', 'materno', 'telefono', 'correo', 'direccion', 'comuna', 'fecha_inicio', 'sueldo')
+#proyecto = Proyecto#('nombre_proyecto', 'descripcion_proyecto', 'fecha_inicio')
+#registro_tiempo=Registro_tiempo
 
 #from controlador.controlador_registro_tiempo import 
 
@@ -30,40 +31,62 @@ entrada = None
 
 #TODO terminar la logica del checkin
 
+def tiempo_ahora():
+    date = datetime.now()
+    return f"{date.year} {date.month} {date.day} {date.hour} {date.minute} "
+
+def tiempo_desc(time_str,tipo = None):
+    time_desc = str(time_str).split()
+    match(tipo):
+        case 0:
+            return time_desc[0]
+        case 1:
+            return time_desc[1]
+        case 2:
+            return time_desc[2]
+        case 3:
+            return time_desc[3]
+        case 4:
+            return time_desc[4]
+        case _:
+            return time_desc[3]
+
 def check_in():
+    printer()
     nombre_registrandose=input("Ingrese su nombre: ")
+    nombre_proyecto = input("Ingrese el nombre del proyecto: ")
     empleado = buscar_empleado(nombre_registrandose)
-    if id_registrandose == empleado.get_id():
-        entrada = datetime.now()
-        date = entrada.strftime('%d-%m-%Y')
-        hour = entrada.strftime('%H:%M')
-        descripcion=input("Describa las actividades del dia: ")
-        print(f"Se registró su entrada de fecha {date} a las {hour} horas.")
-        Registro_tiempo.set_fecha(date)
-        Registro_tiempo.set_hra_entrada(hour)
-        Registro_tiempo.set_descripcion_tareas(descripcion)
-        Registro_tiempo.set_id_empleado(id_registrandose)
-        Registro_tiempo.set_id_proyecto(proyecto.get_id)
+    proyecto = buscar_proyecto(nombre_proyecto)
+    if empleado != None:
+        entrada = tiempo_ahora()
+        date = f"{tiempo_desc(entrada,2)}/{tiempo_desc(entrada,1)}/{tiempo_desc(entrada,0)}"
+        hour = f"{tiempo_desc(entrada,3)}:{tiempo_desc(entrada,4)}"
+        #print(f"Se registró su entrada de fecha {date} a las {hour} horas.")
+        registro_tiempo = Registro_tiempo(empleado.get_id(),proyecto.get_id(),date,hour,"","","")
+        return registro_tiempo
     else:
         print("ID no registrado, vuelva a intentarlo.")
+        return None
     
-def check_out():
+def calcular_horas_trabajadas(registro_tiempo = Registro_tiempo):
+    salida = registro_tiempo.get_hra_salida()
+    if entrada:
+        diferencia = 
+        horas_trabajadas = diferencia.total_seconds() / 3600
+        Registro_tiempo.set_hrs_trabajadas(horas_trabajadas)
+
+def check_out(registro_tiempo):
     id_registrandose=int(input("Ingrese su ID: "))
     if id_registrandose == empleado.get_id():
         salida = datetime.now()
-        date = salida.strftime('%d-%m-%Y')
+        dia = salida.day
+
         hour = salida.strftime('%H:%M')
         print(f"Se registró su salida de fecha {date} a las {hour} horas.")
         calcular_horas_trabajadas(salida)
         Registro_tiempo.set_hra_salida(hour)
     else:
         print("ID no registrado, vuelva a intentarlo.")
-    
-def calcular_horas_trabajadas(salida):
-    if entrada:
-        diferencia = salida - entrada
-        horas_trabajadas = diferencia.total_seconds() / 3600
-        Registro_tiempo.set_hrs_trabajadas(horas_trabajadas)
         
 def main_registro_tiempo():
     op= -1

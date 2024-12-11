@@ -25,7 +25,7 @@ def menu():
 def add_proyecto():
     printer()
     nombre_proyecto=input("Ingrese nombre: ")
-    descripcion_proyecto=input("Ingrese direccion: ")
+    descripcion_proyecto=input("Ingrese descripción breve del proyecto: ")
     fecha_inicio= input("Ingrese fecha de inicio: ")
     proyecto=Proyecto(nombre_proyecto,descripcion_proyecto,fecha_inicio)
     agregar_proyecto(proyecto)
