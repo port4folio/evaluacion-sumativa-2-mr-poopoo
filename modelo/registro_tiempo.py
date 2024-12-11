@@ -7,12 +7,16 @@ class Registro_tiempo:
         self.__hra_salida=hra_salida
         self.__hrs_trabajadas=hrs_trabajadas
         self.__descripcion_tareas=descripcion_tareas
+        self.__id_registro = 0
 
     #def get_empleado(self):
     #return self.__empleado ???
     
     def getFecha(self):
         return self.__fecha
+    
+    def getId(self):
+        return self.__id_registro
     
     def getId_empleado(self):
         return self.__id_empleado
@@ -32,6 +36,8 @@ class Registro_tiempo:
     def getDescripcion_tareas(self):
         return self.__descripcion_tareas
     
+    def setId(self, id_registro):
+        self.__id_registro = id_registro
 
     def setFecha(self,fecha):
         self.__fecha=fecha

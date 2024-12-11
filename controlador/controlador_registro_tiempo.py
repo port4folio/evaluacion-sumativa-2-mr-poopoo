@@ -39,8 +39,8 @@ def agregar_salida(registro_tiempo=Registro_tiempo):
             cursor = conn.cursor()  
             # Insert Tabla Registro_tiempo
             cursor.execute(
-                "INSERT INTO registro_tiempo (hra_salida,hrs_trabajadas) VALUES (%s, %s)", (
-                    registro_tiempo.get_hra_salida(),registro_tiempo.get_hrs_trabajadas()
+                "UPDATE registro_tiempo SET hra_salida = %s, hrs_trabajadas = %s WHERE fecha = %s AND id_empleado = %s", (
+                    registro_tiempo.get_hra_salida(),registro_tiempo.get_hrs_trabajadas(), registro_tiempo.getFecha(), registro_tiempo.getId_empleado()
                 )
             )
             conn.commit()
@@ -54,3 +54,30 @@ def agregar_salida(registro_tiempo=Registro_tiempo):
             cursor.close()
         if conn:
             conn.close()
+
+def buscar_registro(fecha, id_empleado):
+    conn=conectar()
+    try:
+        if conn is not None:
+            cursor=conn.cursor(buffered=True)
+            # Select Tabla proyecto
+            cursor.execute(
+                "SELECT fecha,id_empleado,id_proyecto,hra_entrada,descripcion_tareas FROM registro_tiempo WHERE fecha=%(fecha)s AND id_empleado=%(id_empleado)s",
+                {'fecha': fecha, 'id_empleado': id_empleado}
+                )
+            registro=cursor.fetchone()
+            if registro is not None:
+                registro_encontrado=Registro_tiempo(registro[2],registro[3],registro[4])
+                registro_encontrado.setFecha(registro[0])
+                registro_encontrado.setId_empleado(registro[1])
+            else:
+                registro_encontrado=None
+            return registro_encontrado
+        else:
+            return None
+    except Exception as e:
+        #print(f"Error al conectar. {e}")
+        printer(tipo=2,argumento="No se ha podido obtener el registro. Código de error:\n" + str(e))
+    finally:
+        cursor.close()
+        conn.close()

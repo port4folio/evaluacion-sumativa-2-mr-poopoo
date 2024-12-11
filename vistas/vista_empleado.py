@@ -1,5 +1,5 @@
 from modelo.empleado import Empleado
-from controlador.controlador_empleado import agregar_empleado, buscar_empleado, actualizar_empleado, obtener_empleados, eliminar_empleado
+from controlador.controlador_empleado import agregar_empleado, buscar_empleado_nombre, actualizar_empleado, obtener_empleados, eliminar_empleado
 from modelo.printer import printer, clean
 
 def menu():
@@ -40,7 +40,7 @@ def add_empleado():
 def search_empleado():
     printer()
     nombre=input("Ingrese empleado a buscar: ")
-    empleado=buscar_empleado(nombre)
+    empleado=buscar_empleado_nombre(nombre)
     return empleado
 
 def edit_empleado():

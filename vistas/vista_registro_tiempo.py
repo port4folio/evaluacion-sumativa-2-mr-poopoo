@@ -2,8 +2,9 @@ from datetime import datetime
 from modelo.registro_tiempo import Registro_tiempo
 from modelo.empleado import Empleado    #aqui accedi a todos los atributos de los empelados para despues llamar el id
 from modelo.proyecto import Proyecto
-from controlador.controlador_empleado import buscar_empleado
+from controlador.controlador_empleado import buscar_empleado_nombre, buscar_empleado_correo, buscar_empleado_id
 from controlador.controlador_proyecto import buscar_proyecto
+from controlador.controlador_registro_tiempo import buscar_registro, agregar_entrada
 from modelo.printer import printer, clean
 
 # aqui instacié las clases para que puedan ser llamadas y que esten definidas en el chek o no me funcionaba
@@ -55,14 +56,15 @@ def check_in():
     printer()
     nombre_registrandose=input("Ingrese su nombre: ")
     nombre_proyecto = input("Ingrese el nombre del proyecto: ")
-    empleado = buscar_empleado(nombre_registrandose)
+    empleado = buscar_empleado_nombre(nombre_registrandose)
     proyecto = buscar_proyecto(nombre_proyecto)
     if empleado != None:
         entrada = tiempo_ahora()
         date = f"{tiempo_desc(entrada,2)}/{tiempo_desc(entrada,1)}/{tiempo_desc(entrada,0)}"
         hour = f"{tiempo_desc(entrada,3)}:{tiempo_desc(entrada,4)}:00"
         #print(f"Se registró su entrada de fecha {date} a las {hour} horas.")
-        registro_tiempo = Registro_tiempo(empleado.get_id(),proyecto.get_id(),date,hour,"","","")
+        registro_tiempo = Registro_tiempo(empleado.getId(),proyecto.getId(),date,hour,"","","")
+        agregar_entrada(registro_tiempo)
         return registro_tiempo
     else:
         #print("ID no registrado, vuelva a intentarlo.")
@@ -79,10 +81,16 @@ def calcular_horas_trabajadas(registro_tiempo = Registro_tiempo):
         horas_trabajadas = diferencia
         return horas_trabajadas
 
-def check_out(registro_tiempo = Registro_tiempo):
-    empleado_registrandose=input("Ingrese su correo: ")
-    empleado = buscar_empleado(empleado_registrandose)
-    if empleado != None:
+def check_out():
+    #empleado_registrandose=input("Ingrese su correo: ")
+    #empleado = buscar_empleado_correo(empleado_registrandose)
+    printer()
+    fecha = input("Ingrese la fecha del check-in: ")
+    empleado_nombre = input("Ingrese su nombre: ")
+    empleado = buscar_empleado_nombre(empleado_nombre)
+    id_empleado = empleado.getId()
+    registro = buscar_registro(fecha, id_empleado)
+    if registro != None:
         salida = tiempo_ahora()
         date = f"{tiempo_desc(salida,2)}/{tiempo_desc(salida,1)}/{tiempo_desc(salida,0)}"
         hour = f"{tiempo_desc(salida,3)}:{tiempo_desc(salida,4)}:00"
@@ -92,17 +100,14 @@ def check_out(registro_tiempo = Registro_tiempo):
             ["Presiona ENTER para continuar...",None,None]
         ])
         horas = calcular_horas_trabajadas(salida)
-        registro_tiempo.setHrs_trabajadas(horas)
-        registro_tiempo.set_hra_salida(hour)
+        registro.setHrs_trabajadas(horas)
+        registro.set_hra_salida(hour)
         input()
-        return registro_tiempo
     else:
         #print("ID no registrado, vuelva a intentarlo.")
         printer(tipo=2,argumento="Usted no está registrado. Vuelva a intentarlo.")
-        
-def agregar_registro_tiempo(id_empleado = 0, id_proyecto = 0, fecha = "",)
 
-def main_registro_tiempo(datos):
+def main_registro_tiempo():
     op= -1
     while op != 0:
         op=menu()
@@ -110,5 +115,3 @@ def main_registro_tiempo(datos):
             check_in()
         elif op ==2:
             check_out()
-        elif op==3:
-            if datos['is_admin'] == 1:
