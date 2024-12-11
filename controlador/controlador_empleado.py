@@ -33,7 +33,7 @@ def actualizar_empleado(empleado = Empleado):
             # Update Tabla Empleado
             cursor.execute("UPDATE empleado SET nombres=%s, paterno=%s, materno=%s, telefono=%s, correo=%s, direccion=%s, comuna=%s, fecha_inicio=%s, sueldo=%s WHERE id_empleado=%s",
                         (empleado.getNombres(), empleado.getPaterno(), empleado.getMaterno(),empleado.getTelefono(), empleado.getCorreo(), empleado.getDireccion(), 
-                 empleado.getComuna(), empleado.get_fecha_inicio(), empleado.get_sueldo(), empleado.get_id())
+                 empleado.getComuna(), empleado.getFecha_inicio(), empleado.getSueldo(), empleado.getId())
             )
             conn.commit()
             #print("Empleado actualizado")
@@ -59,7 +59,7 @@ def buscar_empleado(nombre):
             empleado=cursor.fetchone()
             if empleado != None:
                 empleado_encontrado=Empleado(empleado[1],empleado[2],empleado[3],empleado[4],empleado[5],empleado[6],empleado[7],empleado[8],empleado[9])
-                empleado_encontrado.set_id(empleado[0])
+                empleado_encontrado.setId(empleado[0])
             else:
                 empleado_encontrado=None
             return empleado_encontrado
@@ -84,7 +84,7 @@ def obtener_empleados():
             if len(empleados_encontrados) > 0:
                 for empleado in empleados_encontrados:
                     empleado_encontrado=Empleado(empleado[1],empleado[2],empleado[3],empleado[4],empleado[5],empleado[6],empleado[7],empleado[8],empleado[9])
-                    empleado_encontrado.set_id(empleado[0])
+                    empleado_encontrado.setId(empleado[0])
                     empleados_lista.append(empleado_encontrado)
                 return empleados_lista
             else:

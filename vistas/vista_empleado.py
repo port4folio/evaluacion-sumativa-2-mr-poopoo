@@ -1,5 +1,5 @@
 from modelo.empleado import Empleado
-from controlador.controlador_empleado import agregar_empleado, crear_tabla, buscar_empleado, actualizar_empleado, obtener_empleados, eliminar_empleado
+from controlador.controlador_empleado import agregar_empleado, buscar_empleado, actualizar_empleado, obtener_empleados, eliminar_empleado
 from modelo.printer import printer, clean
 
 def menu():
