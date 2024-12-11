@@ -100,7 +100,9 @@ def check_out(registro_tiempo = Registro_tiempo):
         #print("ID no registrado, vuelva a intentarlo.")
         printer(tipo=2,argumento="Usted no está registrado. Vuelva a intentarlo.")
         
-def main_registro_tiempo():
+def agregar_registro_tiempo(id_empleado = 0, id_proyecto = 0, fecha = "",)
+
+def main_registro_tiempo(datos):
     op= -1
     while op != 0:
         op=menu()
@@ -108,3 +110,5 @@ def main_registro_tiempo():
             check_in()
         elif op ==2:
             check_out()
+        elif op==3:
+            if datos['is_admin'] == 1:

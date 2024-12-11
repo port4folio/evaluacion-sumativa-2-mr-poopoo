@@ -52,7 +52,7 @@ def buscar_proyecto(nombre):
             proyecto=cursor.fetchone()
             if proyecto is not None:
                 proyecto_encontrado=Proyecto(proyecto[1],proyecto[2],proyecto[3])
-                proyecto_encontrado.set_id(proyecto[0])
+                proyecto_encontrado.setId(proyecto[0])
             else:
                 proyecto_encontrado=None
             return proyecto_encontrado
