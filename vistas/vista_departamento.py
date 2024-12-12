@@ -47,9 +47,17 @@ def edit_departamento():
     #print('1.- Nombre') 
     #print('2.- Gerente')
     #print('0.- Salir')
+    printer()
+    printer([
+      ["-- Menú editar departamento --", None, None],
+      ["1. Nombre", None, None],
+      ["2. Gerente", None, None],
+      ["0. Salir", None, None]
+    ])
     op = int(input('Seleccione una opción: '))
     if op == 1:
       #print(f'El nombre actual es: {departamento.getNombre()}')
+      printer()
       printer([
         ["El nombre actual es: " + departamento.getNombre(), None, None]
       ])
@@ -57,6 +65,7 @@ def edit_departamento():
       departamento.setNombre(nombre)
     elif op == 2:
       #print(f'El gerente actual es: {departamento.getGerente()}')
+      printer()
       printer([
         ["El gerente actual es: " + departamento.getGerente(), None, None]
       ])
@@ -76,6 +85,7 @@ def print_departamento():
   departamento = buscar_departamento(nombre)
   if departamento != None:
     #print(departamento)
+    printer()
     printer([
       ["Departamento:\n",None,None],
       [departamento,None,None],
@@ -87,6 +97,7 @@ def print_departamento():
     printer(tipo=2,argumento="Departamento no encontrado.")
 
 def print_departamentos():
+  printer()
   departamentos = obtener_departamentos()
   if departamentos != None:
     if len(departamentos) > 0:
@@ -114,6 +125,7 @@ def delete_departamento():
   nombre = input("Ingrese el nombre del departamento: ")
   departamento = buscar_departamento(nombre)
   if departamento != None:
+    printer()
     #print(f'Eliminará  el departamento {departamento.getNombre()}')
     #print('¿Estás seguro?')
     #print('1.- Si')
@@ -127,7 +139,7 @@ def delete_departamento():
     ])
     resp = int(input('Seleccione una opción: '))
     if resp == 1:
-      eliminar_departamento(departamento)
+      eliminar_departamento(departamento.getNombre())
     else:
       #print('Departamento no eliminado')
       printer(tipo=1,argumento="El departamento no ha sido eliminado.")

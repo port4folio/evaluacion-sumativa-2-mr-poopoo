@@ -32,7 +32,7 @@ def add_proyecto():
 
 def search_proyecto():
     printer()
-    nombre=input("Ingrese empleado a buscar: ")
+    nombre=input("Ingrese proyecto a buscar: ")
     proyecto=buscar_proyecto(nombre)
     return proyecto
 
@@ -138,13 +138,13 @@ def delete_proyecto():
         #print("2.-No")
         #print("3.-Salir")
         printer([
-            ["Desea eliminar el proyecto \"" + proyecto.get_nombre_proyecto + "\"?", None, clean()],
+            ["Desea eliminar el proyecto \"" + proyecto.getNombre_proyecto() + "\"?", None, clean()],
             ["1. Sí", None, None],
             ["2. No", None, None]
         ])
         resp=int(input("Seleccione una opcion: "))
         if resp==1:
-            eliminar_proyecto(proyecto)
+            eliminar_proyecto(proyecto.getNombre_proyecto())
             print("Se ha eliminado el proyecto con éxito")
         else:
             #print("proyecto no eliminado")

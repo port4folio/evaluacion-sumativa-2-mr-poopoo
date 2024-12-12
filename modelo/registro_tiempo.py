@@ -1,6 +1,6 @@
 class Registro_tiempo:
-    def __init__(self, id_empleado, id_proyecto, fecha, hra_entrada, hra_salida, hrs_trabajadas, descripcion_tareas):
-        self.__fecha=fecha
+    def __init__(self, id_empleado, id_proyecto, hra_entrada, hra_salida, hrs_trabajadas, descripcion_tareas):
+        self.__fecha=""
         self.__id_empleado=id_empleado
         self.__id_proyecto=id_proyecto
         self.__hra_entrada=hra_entrada

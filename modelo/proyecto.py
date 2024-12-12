@@ -38,4 +38,4 @@ class Proyecto:
     
 
     def __str__(self):
-        return f"Nombre: {self.__nombre_proyecto}\nDescripcion del proyecto {self.__descripcion_proyecto}\nFecha de inicio {self.__fecha_inicio}\n"
+        return f"Nombre: {self.__nombre_proyecto}\nDescripcion del proyecto: {self.__descripcion_proyecto}\nFecha de inicio: {self.__fecha_inicio}\n"

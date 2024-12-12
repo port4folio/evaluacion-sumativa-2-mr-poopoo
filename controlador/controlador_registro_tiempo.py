@@ -13,8 +13,8 @@ def agregar_entrada(registro_tiempo = Registro_tiempo):
             cursor = conn.cursor()  
             # Insert Tabla Registro_tiempo
             cursor.execute(
-                "INSERT INTO registro_tiempo (fecha,id_empleado,id_proyecto,hra_entrada,descripcion_tareas) VALUES (%s, %s, %s, %s, %s)", (
-                    registro_tiempo.getFecha(), registro_tiempo.getId_empleado(), registro_tiempo.getId_proyecto(), registro_tiempo.get_hra_entrada(),registro_tiempo.getDescripcion_tareas()
+                "INSERT INTO registro_tiempo (fecha,id_empleado,id_proyecto,hra_entrada,hra_salida,hrs_trabajadas,descripcion_tareas) VALUES (%s, %s, %s, %s, %s, %s, %s)", (
+                    registro_tiempo.getFecha(), registro_tiempo.getId_empleado(), registro_tiempo.getId_proyecto(), registro_tiempo.get_hra_entrada(),registro_tiempo.get_hra_salida(),registro_tiempo.get_hrs_trabajadas(),registro_tiempo.getDescripcion_tareas()
                 )
             )
             conn.commit()
@@ -39,8 +39,8 @@ def agregar_salida(registro_tiempo=Registro_tiempo):
             cursor = conn.cursor()  
             # Insert Tabla Registro_tiempo
             cursor.execute(
-                "UPDATE registro_tiempo SET hra_salida = %s, hrs_trabajadas = %s WHERE fecha = %s AND id_empleado = %s", (
-                    registro_tiempo.get_hra_salida(),registro_tiempo.get_hrs_trabajadas(), registro_tiempo.getFecha(), registro_tiempo.getId_empleado()
+                "UPDATE registro_tiempo SET hra_salida = %s, hrs_trabajadas = %s, descripcion_tareas = %s WHERE fecha = %s AND id_empleado = %s", (
+                    registro_tiempo.get_hra_salida(),registro_tiempo.get_hrs_trabajadas(), registro_tiempo.getDescripcion_tareas(), registro_tiempo.getFecha(), registro_tiempo.getId_empleado()
                 )
             )
             conn.commit()
@@ -62,14 +62,13 @@ def buscar_registro(fecha, id_empleado):
             cursor=conn.cursor(buffered=True)
             # Select Tabla proyecto
             cursor.execute(
-                "SELECT fecha,id_empleado,id_proyecto,hra_entrada,descripcion_tareas FROM registro_tiempo WHERE fecha=%(fecha)s AND id_empleado=%(id_empleado)s",
+                "SELECT fecha,id_empleado,id_proyecto,hra_entrada,hra_salida,hrs_trabajadas,descripcion_tareas FROM registro_tiempo WHERE fecha=%(fecha)s AND id_empleado=%(id_empleado)s",
                 {'fecha': fecha, 'id_empleado': id_empleado}
                 )
             registro=cursor.fetchone()
             if registro is not None:
-                registro_encontrado=Registro_tiempo(registro[2],registro[3],registro[4])
+                registro_encontrado=Registro_tiempo(registro[1],registro[2],registro[3],registro[4],registro[5],registro[6])
                 registro_encontrado.setFecha(registro[0])
-                registro_encontrado.setId_empleado(registro[1])
             else:
                 registro_encontrado=None
             return registro_encontrado

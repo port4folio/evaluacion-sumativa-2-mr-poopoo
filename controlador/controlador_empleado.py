@@ -187,7 +187,7 @@ def eliminar_empleado(nombre):
     try:
         if conn is not None:
             cursor=conn.cursor()
-            cursor.execute("DELETE FROM empleado WHERE nombres = %s",{nombre})
+            cursor.execute("DELETE FROM empleado WHERE nombres = %(nombre)s",{'nombre': nombre})
             conn.commit()
             #print("Empleado eliminado")
             printer(tipo=0, argumento="Empleado eliminado correctamente.")

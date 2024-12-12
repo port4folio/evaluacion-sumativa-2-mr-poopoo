@@ -33,7 +33,7 @@ def actualizar_departamento(departamento = Departamento):
             cursor = conn.cursor()
             # Update Tabla Departamento
             cursor.execute("UPDATE departamento SET nombre=%s,descripcion=%s,gerente=%s WHERE id_departamento=%s",
-                        (departamento.get_nombre(),departamento.get_descripcion(),departamento.get_gerente(), departamento.get_id_departamento()))
+                        (departamento.getNombre(),departamento.getDescripcion(),departamento.getGerente(), departamento.getId_departamento()))
             conn.commit()
             #print("Departamento actualizado")
             printer(tipo=0,argumento="Departamento actualizado correctamente.")
@@ -52,13 +52,13 @@ def buscar_departamento(nombre):
             cursor=conn.cursor()
             # Select Tabla Departamento
             cursor.execute(
-                "SELECT id_departamento,nombre,descripcion,gerente FROM departamento WHERE nombre=%s",
-                (nombre)
+                "SELECT id_departamento,nombre,descripcion,gerente FROM departamento WHERE nombre=%(nombre)s",
+                {'nombre': nombre}
                 )
             departamento=cursor.fetchone()
-            if departamento is not None:
+            if departamento != None:
                 departamento_encontrado=Departamento(departamento[1],departamento[2],departamento[3])
-                departamento_encontrado.set_id_departamento(departamento[0])
+                departamento_encontrado.setId_departamento(departamento[0])
             else:
                 departamento_encontrado=None
             return departamento_encontrado
@@ -79,10 +79,10 @@ def obtener_departamentos():
             cursor.execute("SELECT id_departamento,nombre,descripcion,gerente FROM departamento")
             departamentos_encontrados = cursor.fetchall()
             departamento_lista = []
-            if len(departamento_encontrado) > 0:
+            if len(departamentos_encontrados) > 0:
                 for departamento in departamentos_encontrados:
                     departamento_encontrado=Departamento(departamento[1],departamento[2],departamento[3])
-                    departamento_encontrado.set_id_departamento(departamento[0])
+                    departamento_encontrado.setId_departamento(departamento[0])
                     departamento_lista.append(departamento_encontrado)
                 return departamento_lista
             else:
@@ -101,7 +101,7 @@ def eliminar_departamento(nombre):
     try:
         if conn is not None:
             cursor=conn.cursor()
-            cursor.execute("DELETE FROM departamento WHERE nombre = %s",(nombre))
+            cursor.execute("DELETE FROM departamento WHERE nombre = %(nombre)s",{'nombre': nombre})
             conn.commit()
             #print("Departamento eliminado")
             printer(tipo=0,argumento="Departamento eliminado correctamente.")

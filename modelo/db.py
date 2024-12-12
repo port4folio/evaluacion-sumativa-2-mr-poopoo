@@ -14,6 +14,7 @@ def conectar():
     conn = mysql.connector.connect(
       host = 'localhost',
       database = 'db_empleados',
+      #database = 'db_final',
       user = 'admin_empleados',
       password = '12345678'
     )

@@ -4,7 +4,7 @@ from modelo.empleado import Empleado    #aqui accedi a todos los atributos de lo
 from modelo.proyecto import Proyecto
 from controlador.controlador_empleado import buscar_empleado_nombre, buscar_empleado_correo, buscar_empleado_id
 from controlador.controlador_proyecto import buscar_proyecto
-from controlador.controlador_registro_tiempo import buscar_registro, agregar_entrada
+from controlador.controlador_registro_tiempo import buscar_registro, agregar_entrada, agregar_salida
 from modelo.printer import printer, clean
 
 # aqui instacié las clases para que puedan ser llamadas y que esten definidas en el chek o no me funcionaba
@@ -60,10 +60,11 @@ def check_in():
     proyecto = buscar_proyecto(nombre_proyecto)
     if empleado != None:
         entrada = tiempo_ahora()
-        date = f"{tiempo_desc(entrada,2)}/{tiempo_desc(entrada,1)}/{tiempo_desc(entrada,0)}"
+        date = f"{tiempo_desc(entrada,2)}-{tiempo_desc(entrada,1)}-{tiempo_desc(entrada,0)}"
         hour = f"{tiempo_desc(entrada,3)}:{tiempo_desc(entrada,4)}:00"
         #print(f"Se registró su entrada de fecha {date} a las {hour} horas.")
-        registro_tiempo = Registro_tiempo(empleado.getId(),proyecto.getId(),date,hour,"","","")
+        registro_tiempo = Registro_tiempo(empleado.getId(),proyecto.getId(),hour,"","","")
+        registro_tiempo.setFecha(date)
         agregar_entrada(registro_tiempo)
         return registro_tiempo
     else:
@@ -85,23 +86,26 @@ def check_out():
     #empleado_registrandose=input("Ingrese su correo: ")
     #empleado = buscar_empleado_correo(empleado_registrandose)
     printer()
-    fecha = input("Ingrese la fecha del check-in: ")
+    fecha = input("Ingrese la fecha del check-in (dd-mm-aaaa): ")
     empleado_nombre = input("Ingrese su nombre: ")
+    descripcion = input("Describa brevemente lo que ha hecho durante el día: ")
     empleado = buscar_empleado_nombre(empleado_nombre)
     id_empleado = empleado.getId()
     registro = buscar_registro(fecha, id_empleado)
     if registro != None:
         salida = tiempo_ahora()
-        date = f"{tiempo_desc(salida,2)}/{tiempo_desc(salida,1)}/{tiempo_desc(salida,0)}"
+        date = f"{tiempo_desc(salida,2)}-{tiempo_desc(salida,1)}-{tiempo_desc(salida,0)}"
         hour = f"{tiempo_desc(salida,3)}:{tiempo_desc(salida,4)}:00"
         #print(f"Se registró su salida de fecha {date} a las {hour} horas.")
+        registro.set_hra_salida(hour)
+        horas = calcular_horas_trabajadas(registro)
+        registro.setHrs_trabajadas(horas)
+        registro.setDescripcion_tareas(descripcion)
+        agregar_salida(registro)
         printer([
             ["Se ha registrado su salida. Fecha: " + date + ", Hora: " + hour, None, clean()],
             ["Presiona ENTER para continuar...",None,None]
         ])
-        horas = calcular_horas_trabajadas(salida)
-        registro.setHrs_trabajadas(horas)
-        registro.set_hra_salida(hour)
         input()
     else:
         #print("ID no registrado, vuelva a intentarlo.")

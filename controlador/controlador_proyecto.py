@@ -123,7 +123,7 @@ def eliminar_proyecto(nombre):
     try:
         if conn is not None:
             cursor=conn.cursor()
-            cursor.execute("DELETE FROM proyecto WHERE nombre_proyecto = %s",(nombre))
+            cursor.execute("DELETE FROM proyecto WHERE nombre_proyecto = %(nombre)s",{'nombre': nombre})
             conn.commit()
             #print("Proyecto eliminado")
             printer(tipo=0,argumento="Proyecto eliminado correctamente.")
